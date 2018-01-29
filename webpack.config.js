@@ -91,8 +91,12 @@ module.exports = {
       },
     }],
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/, query: {
+        presets:[ 'es2017', 'react', 'stage-3' ]
+      } },
+      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/, query: {
+        presets:[ 'es2017', 'react', 'stage-3' ]
+      } },
       { test: /\.css$/, loader: ['css-loader', 'style-loader'], include: /node_modules/ },
       { test: /\.svg$/, loader: 'svg-inline-loader', exclude: /node_modules/}
     ]

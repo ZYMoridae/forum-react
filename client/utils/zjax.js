@@ -13,14 +13,14 @@ class Zjax {
 			responseType: 'json',
 			url: url
 		};
-		let options = Object.assign({}, option, default_option);
-		let _axios = axios(options);
+		let _axios = axios(Object.assign({}, option, default_option));
 		if(successCallback && typeof successCallback === 'function') {
 			_axios.then(successCallback);
 		}
 		if(failureCallback && typeof failureCallback === 'function') {
 			_axios.catch(failureCallback);
 		}
+		return _axios
 	}
 }
 

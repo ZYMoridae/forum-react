@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Dashboard from './Dashboard';
+import MyDashboard from '../containers/MyDashboard';
 // import axios from 'axios';
 import Zjax from '../utils/zjax';
 
@@ -58,7 +59,7 @@ const BasicExample = () => (
 const Home = () => (
   <div>
     <h2>Home</h2>
-    <Dashboard />
+    <MyDashboard />
   </div>
 )
 
