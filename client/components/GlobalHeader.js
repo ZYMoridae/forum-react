@@ -12,13 +12,28 @@ export default class GlobalHeader extends Component {
 
     let heroImageComponent = <span>Loading</span>
     if(isFetchedUser){
-      heroImageComponent = <img src={info.image_url} className="Dashboard-logo" alt="logo" />
+      heroImageComponent = <img src={info.image_url} className="GlobalHeader-logo" alt="logo" />
     }
 
     return (
       <div className="GlobalHeader">
-        {heroImageComponent}
-        <span>Global Header</span>
+        <div className="GlobalHeader-secondary">
+          <ul className="GlobalHeader-header-controls">
+            <li className="GlobalHeader-item-button GlobalHeader-item">
+              <a>
+                <span>SHOP</span>
+              </a>
+            </li>
+            <li className="GlobalHeader-item-button GlobalHeader-item">
+              <a>
+                <span>BLOG</span>
+              </a>
+            </li>
+            <li className="GlobalHeader-item-session GlobalHeader-item">
+              {heroImageComponent}
+            </li>
+          </ul>
+        </div>
       </div>
     )
   }

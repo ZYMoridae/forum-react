@@ -1,9 +1,50 @@
-.Dashboard-logo {
-  animation: Dashboard-logo-spin infinite 20s linear;
-  height: 65px;
-  border-radius: 50%;
+.GlobalHeader {
+	position: fixed;
+	height: 64px;
+	top: 0;
+	right: 0;
+	left: 0;
+	background: rgba(248,0,111,.98);
+	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,.35);
+	box-shadow: 0 2px 6px rgba(0,0,0,.35);
 }
-@keyframes Dashboard-logo-spin {
+.GlobalHeader-secondary {
+	float: right;
+	display: block;
+	width: 100%;
+	padding-right: 25px;
+	padding-left: 25px;
+}
+.GlobalHeader-item-session {
+	vertical-align: middle;
+	line-height: 64px;
+}
+.GlobalHeader-header-controls {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+	vertical-align: middle;
+	float: right;
+}
+.GlobalHeader-item {
+	display: inline-block;
+	font-family: "Open Sans",Helvetica,Arial,sans-serif;
+	font-weight: 400;
+}
+.GlobalHeader-logo {
+  animation: GlobalHeader-logo-spin infinite 20s linear;
+  height: 40px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.GlobalHeader-item-button {
+	margin-right: 20px;
+	font-size: 16px;
+	color: #fff!important;
+	padding: 6px 0;	
+}
+@keyframes GlobalHeader-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
