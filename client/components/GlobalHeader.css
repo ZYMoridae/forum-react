@@ -8,10 +8,16 @@
 	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,.35);
 	box-shadow: 0 2px 6px rgba(0,0,0,.35);
 }
+.GlobalHeader-container {
+	max-width: 100%;
+	margin-right: auto;
+  margin-left: auto;
+  padding-left: 25px;
+  padding-right: 25px;
+}
 .GlobalHeader-secondary {
 	float: right;
 	display: block;
-	width: 100%;
 	padding-right: 25px;
 	padding-left: 25px;
 }
@@ -32,8 +38,8 @@
 	font-family: "Open Sans",Helvetica,Arial,sans-serif;
 	font-weight: 400;
 }
-.GlobalHeader-logo {
-  animation: GlobalHeader-logo-spin infinite 20s linear;
+.GlobalHeader-hero-logo {
+  animation: GlobalHeader-hero-logo-spin infinite 20s linear;
   height: 40px;
   border-radius: 50%;
   vertical-align: middle;
@@ -44,7 +50,19 @@
 	color: #fff!important;
 	padding: 6px 0;	
 }
-@keyframes GlobalHeader-logo-spin {
+.Header-title {
+  float: left;
+  vertical-align: top;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 15px 0 0;
+  line-height: 60px;
+}
+.Logo {
+	max-height: 30px;
+	vertical-align: middle;
+}
+@keyframes GlobalHeader-hero-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
