@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Dashboard from './Dashboard';
+import GlobalHeader from './GlobalHeader';
 import MyDashboard from '../containers/MyDashboard';
+import GlobalHeaderContainer from '../containers/GlobalHeaderContainer';
 // import axios from 'axios';
 import Zjax from '../utils/zjax';
 
@@ -59,6 +61,7 @@ const BasicExample = () => (
 const Home = () => (
   <div>
     <h2>Home</h2>
+    <GlobalHeaderContainer />
     <MyDashboard />
   </div>
 )

@@ -5,6 +5,7 @@ import SecondNavigator from './post/SecondNavigator';
 import PostList from './post/PostList';
 import Zjax from '../utils/zjax';
 import PropTypes from 'prop-types';
+import './Dashboard.css';
 
 class Dashboard extends Component {
 	// constructor(props) {
@@ -25,12 +26,13 @@ class Dashboard extends Component {
 		this.props.dispatch(fetchTags());
 	}
   render() {
-  	const {infos, onTodoClick} = this.props;
-  	if(infos.posts) {
+  	const {infos, onTodoClick, isFetching} = this.props;
+  	if(!isFetching) {
 	    return (
-	      <div className="dashboard">
+	      <div className="Dashboard">
 	      	<SecondNavigator onClick={this.props.onTodoClick}></SecondNavigator>
 	      	<PostList posts={infos.posts}></PostList>
+	      	<a className="LoadMore-btn">Load More</a>
 	      </div>
 	    )  		
   	}

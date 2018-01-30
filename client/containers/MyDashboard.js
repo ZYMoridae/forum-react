@@ -6,7 +6,8 @@ const mapStateToProps = state => {
   console.log('mydashboard', state);
   return {
     todos: Object.assign({}, state),
-    infos: Object.assign({}, state.ForumReducer.infos)
+    infos: state.ForumReducer.infos,
+    isFetching: state.ForumReducer.isFetching
   }
 }
 

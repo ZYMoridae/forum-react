@@ -24,11 +24,30 @@ export const toggleTodo = id => {
   }
 }
 
+function fetchingPosts() {
+  return {
+    type: 'FETCHING_POSTS_PENDING',
+    isFetching: true,
+    isFetched: false
+  }
+}
+
+function fetchingPostsError(err) {
+  return {
+    type: 'FETCHING_POSTS_REJECTED',
+    isFetching: false,
+    isFetched: false,
+    err: err
+  }
+}
+
 
 function receivePosts(option, json) {
   return {
     type: 'RECEIVE_POSTS',
     option: option,
+    isFetching: false,
+    isFetched: true,
     infos: {
       posts: json
     },
@@ -45,9 +64,9 @@ function receiveTags(option, json) {
   }
 }
 
-
 export const updatePosts = (option) => {
   return function (dispatch) {
+    dispatch(fetchingPosts());
     zjax.request({
       url: '/api/v1/forum/posts',
       option: {
@@ -62,6 +81,9 @@ export const updatePosts = (option) => {
       },
       successCallback: (response) => {
         dispatch(receivePosts(option, response.data));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchingPostsError(err));
       }
     });
   }
@@ -76,6 +98,56 @@ export const fetchTags = (option) => {
       },
       successCallback: (response) => {
         dispatch(receiveTags(option, response.data));
+      }
+    })
+  }
+}
+
+
+// -------- User Actions ----------
+
+function receieveUser(option, json) {
+  return {
+    type: 'RECEIVE_USER',
+    option: option,
+    isFetchingUser: false,
+    isFetchedUser: true,
+    info: json,
+    receivedAt: Date.now()
+  }
+}
+
+function fetchingUser(option, json) {
+  return {
+    type: 'FETCHING_USER_PENDING',
+    option: option,
+    isFetching: true,
+    isFetched: false
+  }
+}
+
+function fetchingUserError(err) {
+  return {
+    type: 'FETCHING_USER_PENDING',
+    isFetching: false,
+    isFetched: true
+  }
+}
+
+
+export const fetchUserInfo = (option) => {
+  return function (dispatch) {
+    dispatch(fetchingUser());
+    zjax.request({
+      url: '/api/v7/user',
+      option: {
+        method: 'get'
+      },
+      successCallback: (response) => {
+        dispatch(receieveUser(option, response.data));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchingUserError(err));
       }
     })
   }

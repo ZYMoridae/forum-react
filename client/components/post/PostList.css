@@ -12,6 +12,7 @@
 	color: #f8006f;
 	font-weight: 700;
 	width: 100%;
+	text-align: left;
 }
 .PostList-title-link:hover {
 	text-decoration: underline;
