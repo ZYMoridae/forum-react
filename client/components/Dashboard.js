@@ -24,7 +24,11 @@ class Dashboard extends Component {
 	componentDidMount() {
 		this.props.dispatch(updatePosts());
 		this.props.dispatch(fetchTags());
+    window.addEventListener('scroll', this.loadMorePosts.bind(this));
 	}
+  loadMorePosts() {
+    console.log('scroll');
+  }
   render() {
   	const {infos, onTodoClick, isFetching} = this.props;
   	if(!isFetching) {
