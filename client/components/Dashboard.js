@@ -41,7 +41,8 @@ class Dashboard extends Component {
     const windowBottom = windowHeight + window.pageYOffset;
     if(windowBottom >= docHeight && !this.props.isFetching) {
       this.props.dispatch(updatePosts({
-        page_num: this.props.page_num
+        page_num: this.props.page_num,
+        tag_id: this.props.selectTagId
       }));
     }
   }

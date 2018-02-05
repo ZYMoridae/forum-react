@@ -75,6 +75,9 @@ export const updatePosts = (option) => {
   return function (dispatch) {
     dispatch(fetchingPosts());
     let page_num = option && option.page_num ? option.page_num : 1;
+    // if(option && option.tag_id) {
+    //   page_num = 1;
+    // }
     zjax.request({
       url: '/api/v1/forum/posts',
       option: {

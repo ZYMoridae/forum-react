@@ -7,7 +7,8 @@ const mapStateToProps = state => {
   return {
     infos: state.ForumReducer.infos,
     isFetching: state.ForumReducer.isFetching,
-    page_num: state.ForumReducer.page_num
+    page_num: state.ForumReducer.page_num,
+    selectTagId: state.ForumReducer.selectTagId
   }
 }
 
