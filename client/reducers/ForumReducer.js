@@ -4,7 +4,8 @@ let initState = {
   infos: {
     posts: []
   },
-  tags: []
+  tags: [],
+  page_num: 1
 }
 const forumReducer = (state = initState, action) => {
   switch (action.type) {
@@ -24,9 +25,20 @@ const forumReducer = (state = initState, action) => {
     case 'FETCHING_POSTS_REJECTED':
       return Object.assign({}, state, {isFetching: action.isFetching, isFetched: action.isFetched, err: err})
     case 'RECEIVE_POSTS':
-      return Object.assign({}, state, {isFetching: action.isFetching, isFetched: action.isFetched, infos: {posts: action.infos.posts}})
+      console.log('%%%%%%%%%%%%%%%%'+action.page_num)
+      return Object.assign({}, state, {isFetching: action.isFetching, page_num: action.page_num, isFetched: action.isFetched, infos: {posts: [].concat(state.infos.posts, action.infos.posts)}})
     case 'RECEIVE_TAGS':
       return Object.assign({}, state, {tags: action.tags})
+    case 'RESET_DASHBOARD_STATUS':
+      return {
+        isFetching: false,
+        isFetched: false,
+        infos: {
+          posts: []
+        },
+        tags: [],
+        page_num: 1
+      }
     default:
       return state
   }

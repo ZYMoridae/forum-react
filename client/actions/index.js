@@ -42,7 +42,7 @@ function fetchingPostsError(err) {
 }
 
 
-function receivePosts(option, json) {
+function receivePosts(option, json, page_num) {
   return {
     type: 'RECEIVE_POSTS',
     option: option,
@@ -51,6 +51,7 @@ function receivePosts(option, json) {
     infos: {
       posts: json
     },
+    page_num: page_num,
     receivedAt: Date.now()
   }
 }
@@ -64,9 +65,16 @@ function receiveTags(option, json) {
   }
 }
 
+export function resetDashboardStatus() {
+  return {
+    type: 'RESET_DASHBOARD_STATUS'
+  }
+}
+
 export const updatePosts = (option) => {
   return function (dispatch) {
     dispatch(fetchingPosts());
+    let page_num = option && option.page_num ? option.page_num : 1;
     zjax.request({
       url: '/api/v1/forum/posts',
       option: {
@@ -74,13 +82,13 @@ export const updatePosts = (option) => {
         params: {
           perPage: 20,
           includeBody: true,
-          page: 1,
+          page: page_num,
           order: 'last_time',
           tag_id: option && option.tag_id ? option.tag_id : 1
         }
       },
       successCallback: (response) => {
-        dispatch(receivePosts(option, response.data));
+        dispatch(receivePosts(option, response.data, page_num + 1));
       },
       failureCallback: (err) => {
         dispatch(fetchingPostsError(err));
@@ -151,4 +159,53 @@ export const fetchUserInfo = (option) => {
       }
     })
   }
+}
+
+// ----------- Post Actions -----------
+
+function receievePost(option, json) {
+  return {
+    type: 'RECEIVE_POST',
+    option: option,
+    isFetchingUser: false,
+    isFetchedUser: true,
+    info: json,
+    receivedAt: Date.now()
+  }
+}
+
+
+function fetchingPost(option, json) {
+  return {
+    type: 'FETCHING_POST_PENDING',
+    option: option,
+    isFetching: true,
+    isFetched: false    
+  }
+}
+
+function fetchingPostError(err) {
+  return {
+    type: 'FETCHING_POST_PENDING',
+    isFetching: false,
+    isFetched: true
+  }
+}
+
+export const fetchPostInfo = (option) => {
+  return function (dispatch) {
+    dispatch(fetchingPost());
+    zjax.request({
+      url: `/api/v1/forum/posts/${option.id}`,
+      option: {
+        method: 'get'
+      },
+      successCallback: (response) => {
+        dispatch(receievePost(option, response.data));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchingPostError(err));
+      }
+    })
+  }  
 }

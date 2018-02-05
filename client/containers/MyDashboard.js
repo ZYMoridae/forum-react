@@ -5,9 +5,9 @@ import Dashboard from '../components/Dashboard'
 const mapStateToProps = state => {
   console.log('mydashboard', state);
   return {
-    todos: Object.assign({}, state),
     infos: state.ForumReducer.infos,
-    isFetching: state.ForumReducer.isFetching
+    isFetching: state.ForumReducer.isFetching,
+    page_num: state.ForumReducer.page_num
   }
 }
 

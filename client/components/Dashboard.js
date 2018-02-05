@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleTodo, updatePosts, fetchTags} from '../actions';
+import { toggleTodo, updatePosts, fetchTags, resetDashboardStatus} from '../actions';
 import SecondNavigator from './post/SecondNavigator';
 import PostList from './post/PostList';
 import Zjax from '../utils/zjax';
 import PropTypes from 'prop-types';
 import './Dashboard.css';
+
+function Loading(props) {
+  return props.isFetching ? <div>Loading</div> : ''
+}
 
 class Dashboard extends Component {
 	// constructor(props) {
@@ -22,25 +26,45 @@ class Dashboard extends Component {
 
 	// }
 	componentDidMount() {
+    console.log('##################123123123')
+    this.props.dispatch(resetDashboardStatus());
 		this.props.dispatch(updatePosts());
 		this.props.dispatch(fetchTags());
+
     window.addEventListener('scroll', this.loadMorePosts.bind(this));
 	}
   loadMorePosts() {
-    console.log('scroll');
+    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
+    const windowBottom = windowHeight + window.pageYOffset;
+    if(windowBottom >= docHeight && !this.props.isFetching) {
+      this.props.dispatch(updatePosts({
+        page_num: this.props.page_num
+      }));
+    }
   }
+
   render() {
   	const {infos, onTodoClick, isFetching} = this.props;
-  	if(!isFetching) {
-	    return (
-	      <div className="Dashboard">
-	      	<SecondNavigator onClick={this.props.onTodoClick}></SecondNavigator>
-	      	<PostList posts={infos.posts}></PostList>
-	      	<a className="LoadMore-btn">Load More</a>
-	      </div>
-	    )  		
-  	}
-  	return <div>Loading</div>
+  	// if(!isFetching) {
+	  //   return (
+	  //     <div className="Dashboard">
+	  //     	<SecondNavigator onClick={this.props.onTodoClick}></SecondNavigator>
+	  //     	<PostList posts={infos.posts}></PostList>
+	  //     	<a className="LoadMore-btn">Load More</a>
+	  //     </div>
+	  //   )  		
+  	// }
+    //<a className="LoadMore-btn">Load More</a> 
+    return (
+      <div className="Dashboard">
+        <SecondNavigator onClick={this.props.onTodoClick}></SecondNavigator>
+        <PostList posts={infos.posts}></PostList>
+        <Loading isFetching={isFetching}/>
+      </div>
+    ) 
   }
 }
 

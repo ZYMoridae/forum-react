@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { fetchUserInfo } from '../actions';
 import './GlobalHeader.css';
 import logo from './logo.svg';
+import { Link } from 'react-router-dom';
 
 export default class GlobalHeader extends Component {
   componentDidMount() {
@@ -19,7 +20,7 @@ export default class GlobalHeader extends Component {
       <div className="GlobalHeader">
         <div className="GlobalHeader-container">
           <h1 className="Header-title">
-            <a>
+            <a href='/'>
               <img src="https://5df605d12ae556cf67ab-1f1de8f87db6161fed354e7e8d0d6d89.ssl.cf5.rackcdn.com/logo-abz62jo2.png" className="Logo"/>
             </a>
           </h1>
