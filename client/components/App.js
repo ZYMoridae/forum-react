@@ -17,16 +17,6 @@ import {
 
 class App extends Component {
   render() {
-    var zjax = new Zjax();
-    zjax.request({
-      url: '/api/v7/user',
-      option: {
-        method: 'get'
-      },
-      successCallback: function(response){
-        console.log(response)
-      }
-    });
     return (
       <div className="App">
         <header className="App-header">

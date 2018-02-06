@@ -6,9 +6,10 @@ import PostList from './post/PostList';
 import Zjax from '../utils/zjax';
 import PropTypes from 'prop-types';
 import './Dashboard.css';
+import Spinner from 'react-spinkit';
 
 function Loading(props) {
-  return props.isFetching ? <div>Loading</div> : ''
+  return props.isFetching ? <div className="Dashboard-spinner"><Spinner name="cube-grid"/></div> : ''
 }
 
 class Dashboard extends Component {

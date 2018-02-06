@@ -8,3 +8,10 @@
   color: #f8006f;
   font-weight: 700;
 }
+.Dashboard-spinner {
+  text-align: -webkit-center;
+}
+.Dashboard-spinner .sk-cube-grid {
+  width: 54px;
+  height: 54px;
+}

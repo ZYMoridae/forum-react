@@ -16,7 +16,7 @@ function PostItem(props) {
                 <li className="PostList-title">
                   <span className="PostList-title-link">{post.title}</span>
                   <span className="PostList-comment" >
-                    <FontAwesomeIcon className="PostList-comment-icon" icon={faComment} size="xs"/>
+                    <FontAwesomeIcon className="PostList-comment-icon" icon={faComment} size="1x"/>
                     {post.comments_count}
                   </span>
                 </li>
