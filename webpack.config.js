@@ -18,9 +18,13 @@ module.exports = {
   },
   devServer: {
     proxy: { // proxy URLs to backend development server
-      '/api': 'http://api.kaylaitsines.com/'
+      '/api': {
+        target: 'http://kayla.pixelforcesystems.com.au/',
+        secure: false,
+        changeOrigin: true
+      }
     },
-    headers: { "Access-Control-Allow-Origin": "*" }
+    headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Credentials": true }
   },
   module: {
     rules: [{

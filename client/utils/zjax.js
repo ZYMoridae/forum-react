@@ -7,8 +7,8 @@ class Zjax {
 		}
 		let default_option = {
 			headers: {
-				'X-USER-ID': '8193055',
-				'X-USER-ACCESS-TOKEN': 'xD8UbywSNjJKZ5y733zh'
+				'X-USER-ID': '9709750',
+				'X-USER-ACCESS-TOKEN': 'kjLyAqTENoUUxXMxaDKS'
 			},
 			responseType: 'json',
 			url: url

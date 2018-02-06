@@ -6,7 +6,7 @@
   "license": "MIT",
   "proxy": {
     "/api": {
-      "target": "https://api.kaylaitsines.com/",
+      "target": "http://kayla.pixelforcesystems.com.au/",
       "pathRewrite": {
         "^/api": ""
       },
