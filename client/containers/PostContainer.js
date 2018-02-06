@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { toggleTodo, updatePosts } from '../actions';
+import { toggleTodo, updatePosts, followPostAction } from '../actions';
 import Post from '../components/post/Post';
 
 const mapStateToProps = state => {
@@ -11,13 +11,17 @@ const mapStateToProps = state => {
     postComments: state.PostReducer.postComments,
     isFetchedPostComments: state.PostReducer.isFetchedPostComments,
     isFetchingPostComments: state.PostReducer.isFetchingPostComments,
-    userInfo: state.UserReducer.info
+    userInfo: state.UserReducer.info,
+    isFollowPost: state.PostReducer.isFollowPost
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatch
+    dispatch,
+    onFollowClick: (id, isFollow) => {
+      dispatch(followPostAction({id: id, isFollow: isFollow}));
+    }
   }
 }
 

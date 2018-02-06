@@ -28,7 +28,7 @@ function PostDetails(props) {
                   </div>
   }
   return  <div>
-            <PostActions />
+            <PostActions post={props.post} isFollowPost={props.isFollowPost} onFollowClick={props.onFollowClick}/>
             <div className="Post-info-container">
               <h3 className="Post-title">{postInfo.title}</h3>
               <h5 className="Post-tags">
@@ -58,25 +58,21 @@ function PostActions(props) {
               </Button>
             </div>
             <div className="Post-action-item">
-              <FollowDropdown />
-{/*              <Button color='orange' className="Post-action-item-btn">
-                <FontAwesomeIcon className="PostList-comment-icon" icon={faStar} size="1x"/>
-                Follow
-              </Button>*/}
+              <FollowDropdown post={props.post} isFollowPost={props.isFollowPost} onFollowClick={props.onFollowClick}/>
             </div>
           </div>
 }
 
 
 
-const FollowDropdown = () => (
-  <Dropdown text='Following' icon='star' floating labeled button className='icon Post-action-item-btn'>
+const FollowDropdown = (props) => (
+  <Dropdown text={props.isFollowPost ? 'Following' : 'Not following'} icon={props.isFollowPost ? 'star' : 'empty star'} floating labeled button className='icon Post-action-item-btn'>
     <Dropdown.Menu>
-      <Dropdown.Item>
+      <Dropdown.Item onClick={(event) => {props.onFollowClick(props.post.id, false)}}>
         <FontAwesomeIcon className="PostList-comment-icon" icon={faStarO} size="1x"/>
         Not following
       </Dropdown.Item>
-      <Dropdown.Item>
+      <Dropdown.Item onClick={(event) => {props.onFollowClick(props.post.id, true)}}>
         <FontAwesomeIcon className="PostList-comment-icon" icon={faStar} size="1x"/>
         Following
       </Dropdown.Item>
@@ -117,10 +113,10 @@ export default class Post extends Component {
     }
   }
   render() {
-    const { isFetchingPost, info, isFetchingPostComments, hasMoreComments, postComments, userInfo} = this.props;
+    const { isFetchingPost, info, isFetchingPostComments, hasMoreComments, postComments, userInfo, isFollowPost, onFollowClick} = this.props;
     return (
       <div className="Post">
-        { info ? <PostDetails post={info} comments={postComments} userInfo={userInfo} isFetchingPostComments={isFetchingPostComments} hasMoreComments={hasMoreComments}/> : <div className="Post-spinner"><Spinner name="cube-grid"/></div> }
+        { info ? <PostDetails onFollowClick={onFollowClick} post={info} comments={postComments} isFollowPost={isFollowPost} userInfo={userInfo} isFetchingPostComments={isFetchingPostComments} hasMoreComments={hasMoreComments}/> : <div className="Post-spinner"><Spinner name="cube-grid"/></div> }
       </div>
     )
   }

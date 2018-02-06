@@ -269,3 +269,42 @@ export const fetchPostComments = (option) => {
     }
   }
 }
+
+
+function followPost(option, json) {
+  return {
+    type: 'FOLLOW_POST',
+    id: option.id,
+    isFollow: option.isFollow,
+    time: Date.now()    
+  }
+}
+
+
+function unfollowPost(option, json) {
+  return {
+    type: 'UNFOLLOW_POST',
+    id: option.id,
+    isFollow: option.isFollow,
+    time: Date.now()    
+  }
+}
+
+
+export const followPostAction = (option) => {
+  return function(dispatch) {
+    zjax.request({
+      url: `/api/v1/forum/posts/${option.id}/follow`,
+      option: {
+        method: option.isFollow ? 'post' : 'delete'
+      },
+      successCallback: (response) => {
+        if(option.isFollow) {
+          dispatch(followPost(option, response.data));
+        }else {
+          dispatch(unfollowPost(option, response.data))
+        }
+      }
+    })
+  }
+}

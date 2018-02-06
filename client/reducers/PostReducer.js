@@ -4,7 +4,8 @@ let initState = {
   info: null,
   commentPagNumber: 1,
   postComments: [],
-  hasMoreComments: true
+  hasMoreComments: true,
+  isFollowPost: false
 }
 const postReducer = (state = initState, action) => {
   switch (action.type) {
@@ -22,7 +23,8 @@ const postReducer = (state = initState, action) => {
       return Object.assign({}, state, {
         isFetchedPOST: action.isFetchedPOST, 
         isFetchingPOST: action.isFetchingPOST, 
-        info: action.info
+        info: action.info,
+        isFollowPost: action.info.follow.follow
       })
     case 'FETCHING_POST_COMMENTS_PENDING':
       return Object.assign({}, state, {
@@ -35,13 +37,20 @@ const postReducer = (state = initState, action) => {
         isFetchingPostComments: action.isFetchingPostComments
       })
     case 'RECEIVE_POST_COMMENTS':
-      console.log(action.info)
       return Object.assign({}, state, {
         postComments: [].concat(state.postComments, action.info),
         isFetchedPostComments: action.isFetchedPostComments,
         isFetchingPostComments: action.isFetchingPostComments,
         hasMoreComments: action.hasMoreComments
       })
+    case 'FOLLOW_POST':
+      return Object.assign({}, state, {
+        isFollowPost: true
+      })
+    case 'UNFOLLOW_POST':
+      return Object.assign({}, state, {
+        isFollowPost: false
+      })      
     default:
       return state
   }
