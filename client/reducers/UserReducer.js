@@ -3,7 +3,7 @@ let initState = {
   isFetchedUser: false,
   info: null
 }
-const forumReducer = (state = initState, action) => {
+const userReducer = (state = initState, action) => {
   switch (action.type) {
     case 'FETCHING_USER_PENDING':
       return Object.assign({}, state, {isFetchedUser: action.isFetchedUser, isFetchingUser: action.isFetchingUser})
@@ -16,4 +16,4 @@ const forumReducer = (state = initState, action) => {
   }
 }
 
-export default forumReducer
+export default userReducer

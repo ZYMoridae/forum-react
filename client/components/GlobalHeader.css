@@ -8,6 +8,10 @@
 	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,.35);
 	box-shadow: 0 2px 6px rgba(0,0,0,.35);
 }
+.GlobalHeader a {
+  color: white;
+  text-decoration: none;
+}
 .GlobalHeader-container {
 	max-width: 100%;
 	margin-right: auto;
@@ -31,6 +35,7 @@
 	padding: 0;
 	display: inline-block;
 	vertical-align: middle;
+  margin-top: 15px;
 	float: right;
 }
 .GlobalHeader-item {
@@ -45,10 +50,18 @@
   vertical-align: middle;
 }
 .GlobalHeader-item-button {
-	margin-right: 20px;
+	margin-right: 35px;
 	font-size: 16px;
 	color: #fff!important;
 	padding: 6px 0;	
+  -webkit-transition: border-bottom 0.1s;
+  transition: border-bottom 0.1s;
+}
+.GlobalHeader-item-button:hover{
+  border-bottom: 2px solid #fff; 
+}
+.GlobalHeader-item-forum {
+  border-bottom: 2px solid #fff;
 }
 .Header-title {
   float: left;

@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { fetchUserInfo } from '../actions';
 import './GlobalHeader.css';
 import logo from './logo.svg';
+import UserPlaceholder from './user_placeholder.svg';
 import { Link } from 'react-router-dom';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
+import { Image } from 'semantic-ui-react';
 
 export default class GlobalHeader extends Component {
   componentDidMount() {
@@ -11,10 +15,10 @@ export default class GlobalHeader extends Component {
   render() {
     const {isFetchingUser, isFetchedUser, info} = this.props;
 
-    let heroImageComponent = <span>Loading</span>
-    if(isFetchedUser){
-      heroImageComponent = <img src={info.image_url} className="GlobalHeader-hero-logo" alt="logo" />
-    }
+    let heroImageComponent = <Image src={isFetchedUser ? info.image_url : UserPlaceholder} size='mini' className="GlobalHeader-hero-logo" circular />
+
+
+    // <img src={isFetchedUser ? info.image_url : UserPlaceholder} className="GlobalHeader-hero-logo" alt="logo" />
 
     return (
       <div className="GlobalHeader">
@@ -27,13 +31,23 @@ export default class GlobalHeader extends Component {
           <div className="GlobalHeader-secondary">
             <ul className="GlobalHeader-header-controls">
               <li className="GlobalHeader-item-button GlobalHeader-item">
-                <a>
+                <a href="https://www.sweat.com/collections/gear">
                   <span>SHOP</span>
                 </a>
               </li>
               <li className="GlobalHeader-item-button GlobalHeader-item">
-                <a>
+                <a href="https://www.sweat.com/blogs/news">
                   <span>BLOG</span>
+                </a>
+              </li>
+              <li className="GlobalHeader-item-button GlobalHeader-item GlobalHeader-item-forum">
+                <a>
+                  <span>FORUM</span>
+                </a>
+              </li>
+              <li className="GlobalHeader-item-button GlobalHeader-item">
+                <a>
+                  <FontAwesomeIcon className="PostList-comment-icon" icon={faSearch} size="1x"/>
                 </a>
               </li>
               <li className="GlobalHeader-item-session GlobalHeader-item">

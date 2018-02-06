@@ -10,6 +10,7 @@ import appReducer from './reducers';
 import { updatePosts } from './actions'
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
+import 'semantic-ui-css/semantic.min.css';
 
 const loggerMiddleware = createLogger();
 

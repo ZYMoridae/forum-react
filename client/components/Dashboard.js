@@ -26,7 +26,6 @@ class Dashboard extends Component {
 
 	// }
 	componentDidMount() {
-    console.log('##################123123123')
     this.props.dispatch(resetDashboardStatus());
 		this.props.dispatch(updatePosts());
 		this.props.dispatch(fetchTags());

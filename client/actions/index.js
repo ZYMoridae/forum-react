@@ -160,7 +160,7 @@ export const fetchUserInfo = (option) => {
       failureCallback: (err) => {
         dispatch(fetchingUserError(err));
       }
-    })
+    });
   }
 }
 
@@ -170,8 +170,8 @@ function receievePost(option, json) {
   return {
     type: 'RECEIVE_POST',
     option: option,
-    isFetchingUser: false,
-    isFetchedUser: true,
+    isFetching: false,
+    isFetched: true,
     info: json,
     receivedAt: Date.now()
   }
@@ -189,7 +189,7 @@ function fetchingPost(option, json) {
 
 function fetchingPostError(err) {
   return {
-    type: 'FETCHING_POST_PENDING',
+    type: 'FETCHING_POST_REJECTED',
     isFetching: false,
     isFetched: true
   }
@@ -209,6 +209,63 @@ export const fetchPostInfo = (option) => {
       failureCallback: (err) => {
         dispatch(fetchingPostError(err));
       }
-    })
+    });
   }  
+}
+
+
+function receievePostComments(option, json, hasMoreComments) {
+  return {
+    type: 'RECEIVE_POST_COMMENTS',
+    option: option,
+    isFetchingPostComments: false,
+    isFetchedPostComments: true,
+    hasMoreComments: hasMoreComments,
+    info: json,
+    receivedAt: Date.now()
+  }
+}
+
+
+function fetchingPostComments(option, json) {
+  return {
+    type: 'FETCHING_POST_COMMENTS_PENDING',
+    option: option,
+    isFetchingPostComments: true,
+    isFetchedPostComments: false    
+  }
+}
+
+
+function fetchingPostCommentsError(err) {
+  return {
+    type: 'FETCHING_POST_COMMENTS_REJECTED',
+    isFetchingPostComments: false,
+    isFetchedPostComments: true
+  }
+}
+
+
+export const fetchPostComments = (option) => {
+  return function (dispatch) {
+    if(option && option.hasMoreComments) {
+      dispatch(fetchingPostComments());
+      zjax.request({  
+        url: `/api/v1/forum/posts/${option.id}/comments`,
+        option: {
+          method: 'get',
+          params: Object.assign({}, {
+            per_page: 20
+          }, option && option.lastCommentId ? {last_comment_id: option.lastCommentId} : {})
+        },
+        successCallback: (response) => {
+          let hasMoreComments = response.headers.has_more === 'true' ? true : false;
+          dispatch(receievePostComments(option, response.data, hasMoreComments));
+        },
+        failureCallback: (err) => {
+          dispatch(fetchingPostCommentsError(err));
+        }
+      });      
+    }
+  }
 }

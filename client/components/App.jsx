@@ -56,7 +56,6 @@ const BasicExample = () => (
 
 const Post = ({ match }) => (
   <div className="Container">
-    <h3>{match.params.id}</h3>
     <PostContainer postId={match.params.id}/>
   </div>
 )

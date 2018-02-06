@@ -1,0 +1,28 @@
+.Comment {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+.Comment-user-img {
+  height: 50px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.Comment-user-name {
+  margin-left: 10px;
+}
+.Comment-body {
+  margin-left: 60px;
+  color: grey;
+}
+.Comment-reply-block {
+  border: 2px dashed #eee;
+  border-radius: 5px;
+}
+.Comment-reply-block > .Comment-reply-block-container {
+  margin: 30px;
+}
+.Comment-reply-block .Comment-user-name {
+  color: grey;
+}
