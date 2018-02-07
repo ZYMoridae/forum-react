@@ -5,19 +5,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App.js';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
 import appReducer from './reducers';
-import { updatePosts } from './actions'
-import { createLogger } from 'redux-logger';
-import thunkMiddleware from 'redux-thunk';
 import 'semantic-ui-css/semantic.min.css';
+import configureStore from './store/configureStore';
+import { PersistGate } from 'redux-persist/integration/react';
 
-const loggerMiddleware = createLogger();
-
-let store = createStore(appReducer, applyMiddleware(thunkMiddleware, loggerMiddleware));
+const { persistor, store } = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>, 
   document.getElementById('root'));

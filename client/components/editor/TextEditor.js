@@ -20,7 +20,7 @@ export default class TextEditor extends Component {
     const {userInfo} = this.props;
     return (
       <div className="TextEditor">
-        <Modal dimmer='blurring' trigger={<Button color='purple' className="start-dsicussion-btn">Start Discussion</Button>}>
+        <Modal dimmer='blurring' trigger={<Button color='black' className="start-dsicussion-btn">Start Discussion</Button>}>
           <Modal.Content image>
             <Image wrapped size='tiny' circular src={userInfo && userInfo.image_url ? userInfo.image_url : '/assets/images/avatar/large/rachel.png'} />
             <Modal.Description>
