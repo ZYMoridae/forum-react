@@ -7,6 +7,7 @@ import Zjax from '../utils/zjax';
 import PropTypes from 'prop-types';
 import './Dashboard.css';
 import Spinner from 'react-spinkit';
+import TextEditor from './editor/TextEditor';
 
 function Loading(props) {
   return props.isFetching ? <div className="Dashboard-spinner"><Spinner name="cube-grid"/></div> : ''
@@ -48,7 +49,7 @@ class Dashboard extends Component {
   }
 
   render() {
-  	const {infos, onTodoClick, isFetching} = this.props;
+  	const {infos, onTodoClick, isFetching, selectTagId, userInfo} = this.props;
   	// if(!isFetching) {
 	  //   return (
 	  //     <div className="Dashboard">
@@ -61,7 +62,7 @@ class Dashboard extends Component {
     //<a className="LoadMore-btn">Load More</a> 
     return (
       <div className="Dashboard">
-        <SecondNavigator onClick={this.props.onTodoClick}></SecondNavigator>
+        <SecondNavigator onClick={onTodoClick} selectTagId={selectTagId} userInfo={userInfo}></SecondNavigator>
         <PostList posts={infos.posts}></PostList>
         <Loading isFetching={isFetching}/>
       </div>

@@ -6,14 +6,73 @@ import UserPlaceholder from './user_placeholder.svg';
 import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
-import { Image } from 'semantic-ui-react';
+import { Dropdown, Image, Modal, Button, Header, Segment, Divider, Form, Checkbox} from 'semantic-ui-react';
+
+
+
+const Trigger = (props) => {
+  return (
+    <span>
+      <Image avatar src={props.userInfo && props.userInfo.image_url ? props.userInfo.image_url : ''} />
+    </span>
+  )
+}
+
+
+
+
+const LoginModal = (props) => {
+  const { formInputOnChangeCallback, formData } = props;
+  return (
+    <Modal size="tiny" trigger={<span>Log in</span>}>
+      <Modal.Content image>
+        <Modal.Description>
+          <Form onSubmit={(event, data) => {props.submitCallback(event, data)}}>
+            <Form.Field>
+              <label>Email</label>
+              <Form.Input placeholder='Email' name='formEmail' value={formData.formEmail} onChange={(event, data)=>{formInputOnChangeCallback(event, data)}}/>
+            </Form.Field>
+            <Form.Field>
+              <label>Password</label>
+              <Form.Input placeholder='Password' type="password" name='formPassword' value={formData.formPassword} onChange={(event, data)=>{formInputOnChangeCallback(event, data)}}/>
+            </Form.Field>
+            <Form.Field>
+              <Checkbox label='I agree to the Terms and Conditions' />
+            </Form.Field>
+            <Button type="submit" primary fluid>Login</Button>
+          </Form>
+          <Divider horizontal>Or</Divider>
+          <Button secondary fluid>Sign Up Now</Button>
+        </Modal.Description>
+      </Modal.Content>
+    </Modal>
+  )
+}
+
+const DropdownOptions = (submitCallback, formInputOnChangeCallback, formData) => {
+  return [
+    { key: 'user', value: 'user', text: 'Account', icon: 'user' },
+    { key: 'settings', value: 'settings', text: 'Settings', icon: 'settings' },
+    { key: 'sign-out', value: 'sign-out', text: 'Sign Out', icon: 'sign out' },
+    { key: 'sign-in', value: 'sign-in', text: <LoginModal submitCallback={submitCallback} formInputOnChangeCallback={formInputOnChangeCallback} formData={formData}/>, icon: 'sign in' }
+  ]
+}
 
 export default class GlobalHeader extends Component {
   componentDidMount() {
     this.props.dispatch(fetchUserInfo());
   }
+  handleClick(event, data) {
+    console.log(data.value)
+  }
+  submitClick(event,data) {
+    console.log(event, data);
+  }
+  inputOnChange(e, {name, value}) {
+
+  }
   render() {
-    const {isFetchingUser, isFetchedUser, info} = this.props;
+    const {isFetchingUser, isFetchedUser, info, formInputOnChange, formEmail, formPassword} = this.props;
 
     let heroImageComponent = <Image src={isFetchedUser ? info.image_url : UserPlaceholder} size='mini' className="GlobalHeader-hero-logo" circular />
 
@@ -22,6 +81,7 @@ export default class GlobalHeader extends Component {
 
     return (
       <div className="GlobalHeader">
+
         <div className="GlobalHeader-container">
           <h1 className="Header-title">
             <a href='/'>
@@ -51,7 +111,8 @@ export default class GlobalHeader extends Component {
                 </a>
               </li>
               <li className="GlobalHeader-item-session GlobalHeader-item">
-                {heroImageComponent}
+                <Dropdown keeponscreen="true" onChange={(event, data) => {this.handleClick(event, data)}} trigger={<Trigger userInfo={info}/>} options={DropdownOptions(this.submitClick, formInputOnChange, {formEmail: formEmail, formPassword: formPassword})} pointing='top left' icon={null} />
+                {/*{heroImageComponent}*/}
               </li>
             </ul>
           </div>

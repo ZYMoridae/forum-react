@@ -3,20 +3,20 @@ import { toggleTodo, updatePosts } from '../actions';
 import Dashboard from '../components/Dashboard'
 
 const mapStateToProps = state => {
-  console.log('mydashboard', state);
   return {
     infos: state.ForumReducer.infos,
     isFetching: state.ForumReducer.isFetching,
     page_num: state.ForumReducer.page_num,
-    selectTagId: state.ForumReducer.selectTagId
+    selectTagId: state.ForumReducer.selectTagId,
+    userInfo: state.UserReducer.info
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    onTodoClick: id => {
-      dispatch(updatePosts({tag_id: id}));
+    onTodoClick: (event, data) => {
+      dispatch(updatePosts({tag_id: data.value}));
     }
   }
 }

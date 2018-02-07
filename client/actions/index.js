@@ -51,6 +51,7 @@ function receivePosts(option, json, page_num) {
     infos: {
       posts: json
     },
+    tag_id: option && option.tag_id ? option.tag_id : 1,
     page_num: page_num,
     receivedAt: Date.now()
   }
@@ -163,6 +164,15 @@ export const fetchUserInfo = (option) => {
     });
   }
 }
+
+export const inputOnChange = (name, value) => {
+  return {
+    type: 'INPUT_CHANGE',
+    name: name,
+    value: value
+  }
+}
+
 
 // ----------- Post Actions -----------
 

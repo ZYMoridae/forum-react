@@ -35,7 +35,6 @@
 	padding: 0;
 	display: inline-block;
 	vertical-align: middle;
-  margin-top: 15px;
 	float: right;
 }
 .GlobalHeader-item {
@@ -59,6 +58,9 @@
 }
 .GlobalHeader-item-button:hover{
   border-bottom: 2px solid #fff; 
+}
+.GlobalHeader-item-button:hover a{
+  color: #fff;
 }
 .GlobalHeader-item-forum {
   border-bottom: 2px solid #fff;

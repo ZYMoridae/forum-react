@@ -1,4 +1,11 @@
 .SecondNavigator {
-  text-align: right;
+/*  text-align: right;*/
   margin-right: 35px;
+  margin-left: 50px;
+}
+.SecondNavigator .start-dsicussion-btn {
+  float: left;
+}
+.SecondNavigator .start-dsicussion-btn span{
+  padding-left: 10px;
 }

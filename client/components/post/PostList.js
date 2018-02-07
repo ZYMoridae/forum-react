@@ -3,6 +3,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faComment from '@fortawesome/fontawesome-free-solid/faComment'
 import './PostList.css';
 import { Link } from 'react-router-dom';
+import { Comment } from 'semantic-ui-react'
 
 function PostItem(props) {
   let post = props.post;
