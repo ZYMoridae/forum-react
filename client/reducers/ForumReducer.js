@@ -1,3 +1,13 @@
+import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const forumPersistConfig = {
+  key: 'ForumReducer',
+  storage,
+  blacklist: ['infos']
+}
+
 let initState = {
   isFetching: false,
   isFetched: false,
@@ -27,7 +37,6 @@ const forumReducer = (state = initState, action) => {
       return Object.assign({}, state, {isFetching: action.isFetching, isFetched: action.isFetched, err: err})
     case 'RECEIVE_POSTS':
       if(action.option && action.option.tag_id && action.page_num === 2) {
-        console.log('#####', action)
         return Object.assign({}, state, {selectTagId: action.tag_id, isFetching: action.isFetching, page_num: action.page_num, isFetched: action.isFetched, infos: {posts: [].concat(action.infos.posts)}})
       }
       return Object.assign({}, state, {selectTagId: action.tag_id, isFetching: action.isFetching, page_num: action.page_num, isFetched: action.isFetched, infos: {posts: [].concat(state.infos.posts, action.infos.posts)}})
@@ -48,4 +57,4 @@ const forumReducer = (state = initState, action) => {
   }
 }
 
-export default forumReducer
+export default persistReducer(forumPersistConfig, forumReducer)

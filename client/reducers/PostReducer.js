@@ -1,3 +1,13 @@
+import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const postPersistConfig = {
+  key: 'PostReducer',
+  storage,
+  blacklist: ['postComments', 'hasMoreComments', 'commentPagNumber', 'info', 'isFollowPost']
+}
+
 let initState = {
   isFetchingPost: false,
   isFetchedPost: false,
@@ -56,4 +66,4 @@ const postReducer = (state = initState, action) => {
   }
 }
 
-export default postReducer
+export default persistReducer(postPersistConfig, postReducer)

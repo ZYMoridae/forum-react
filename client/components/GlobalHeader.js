@@ -6,9 +6,8 @@ import UserPlaceholder from './user_placeholder.svg';
 import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
-import { Dropdown, Image, Modal, Button, Header, Segment, Divider, Form, Checkbox} from 'semantic-ui-react';
-
-
+import { Dropdown, Image, Modal, Button, Divider, Form, Checkbox, Icon} from 'semantic-ui-react';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 const Trigger = (props) => {
   return (
@@ -18,16 +17,13 @@ const Trigger = (props) => {
   )
 }
 
-
-
-
 const LoginModal = (props) => {
-  const { formInputOnChangeCallback, formData } = props;
+  const { formInputOnChangeCallback, formData, fbLoginCallback, isLoginModalOpen, loginModalOpen, loginModalClose, isFetchingUser, accountLogin } = props;
   return (
-    <Modal size="tiny" trigger={<span>Log in</span>}>
+    <Modal open={isLoginModalOpen} onClose={loginModalClose} size="tiny" dimmer='blurring' trigger={<Button loading={isFetchingUser} onClick={loginModalOpen} className='login-btn'>Log in</Button>}>
       <Modal.Content image>
         <Modal.Description>
-          <Form onSubmit={(event, data) => {props.submitCallback(event, data)}}>
+          <Form onSubmit={(event, data) => {accountLogin(event, data, formData)}}>
             <Form.Field>
               <label>Email</label>
               <Form.Input placeholder='Email' name='formEmail' value={formData.formEmail} onChange={(event, data)=>{formInputOnChangeCallback(event, data)}}/>
@@ -39,8 +35,11 @@ const LoginModal = (props) => {
             <Form.Field>
               <Checkbox label='I agree to the Terms and Conditions' />
             </Form.Field>
-            <Button type="submit" primary fluid>Login</Button>
+            <Button type="submit" secondary fluid>Login</Button>
           </Form>
+          <FacebookLogin appId="646106995537624" callback={fbLoginCallback} render={renderProps => (<Button onClick={renderProps.onClick} fluid color='facebook' className='fb-login'>
+            <Icon name='facebook' /> Facebook
+          </Button>)}/>
           <Divider horizontal>Or</Divider>
           <Button secondary fluid>Sign Up Now</Button>
         </Modal.Description>
@@ -49,12 +48,11 @@ const LoginModal = (props) => {
   )
 }
 
-const DropdownOptions = (submitCallback, formInputOnChangeCallback, formData) => {
+const DropdownOptions = (logOut) => {
   return [
     { key: 'user', value: 'user', text: 'Account', icon: 'user' },
     { key: 'settings', value: 'settings', text: 'Settings', icon: 'settings' },
-    { key: 'sign-out', value: 'sign-out', text: 'Sign Out', icon: 'sign out' },
-    { key: 'sign-in', value: 'sign-in', text: <LoginModal submitCallback={submitCallback} formInputOnChangeCallback={formInputOnChangeCallback} formData={formData}/>, icon: 'sign in' }
+    { key: 'sign-out', value: 'sign-out', text: <span onClick={logOut}>Sign out</span>, icon: 'sign out' }
   ]
 }
 
@@ -62,26 +60,19 @@ export default class GlobalHeader extends Component {
   componentDidMount() {
     this.props.dispatch(fetchUserInfo());
   }
-  handleClick(event, data) {
-    console.log(data.value)
-  }
-  submitClick(event,data) {
-    console.log(event, data);
-  }
-  inputOnChange(e, {name, value}) {
-
-  }
   render() {
-    const {isFetchingUser, isFetchedUser, info, formInputOnChange, formEmail, formPassword} = this.props;
+    const {isFetchingUser, isFetchedUser, info, formInputOnChange, formEmail, formPassword, fbLoginCallback, isLoginModalOpen, loginModalOpen, loginModalClose, logOut, accountLogin} = this.props;
 
-    let heroImageComponent = <Image src={isFetchedUser ? info.image_url : UserPlaceholder} size='mini' className="GlobalHeader-hero-logo" circular />
+    let formData = {formEmail: formEmail, formPassword: formPassword};
 
+    let userControlComponent = <LoginModal formInputOnChange={formInputOnChange} formData={formData} fbLoginCallback={fbLoginCallback} isLoginModalOpen={isLoginModalOpen} loginModalOpen={loginModalOpen} loginModalClose={loginModalClose} isFetchingUser={isFetchingUser} accountLogin={accountLogin}/>
 
-    // <img src={isFetchedUser ? info.image_url : UserPlaceholder} className="GlobalHeader-hero-logo" alt="logo" />
+    if(info) {
+      userControlComponent = <Dropdown keeponscreen="true" trigger={<Trigger userInfo={info}/>} options={DropdownOptions(logOut)} pointing='top left' icon={null} />
+    }
 
     return (
       <div className="GlobalHeader">
-
         <div className="GlobalHeader-container">
           <h1 className="Header-title">
             <a href='/'>
@@ -105,14 +96,13 @@ export default class GlobalHeader extends Component {
                   <span>FORUM</span>
                 </a>
               </li>
-              <li className="GlobalHeader-item-button GlobalHeader-item">
+              <li className="GlobalHeader-item-session GlobalHeader-item User-control">
+                {userControlComponent}
+              </li>
+              <li className="GlobalHeader-item-session GlobalHeader-item">
                 <a>
                   <FontAwesomeIcon className="PostList-comment-icon" icon={faSearch} size="1x"/>
                 </a>
-              </li>
-              <li className="GlobalHeader-item-session GlobalHeader-item">
-                <Dropdown keeponscreen="true" onChange={(event, data) => {this.handleClick(event, data)}} trigger={<Trigger userInfo={info}/>} options={DropdownOptions(this.submitClick, formInputOnChange, {formEmail: formEmail, formPassword: formPassword})} pointing='top left' icon={null} />
-                {/*{heroImageComponent}*/}
               </li>
             </ul>
           </div>

@@ -81,3 +81,19 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.fb-login {
+  margin-top: 10px !important;
+}
+.login-btn {
+  border-radius: 50px !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+  border: 2px solid white !important;
+  color: white !important;
+}
+.login-btn:hover {
+  text-decoration: none !important;
+}
+.User-control{
+  margin-right: 35px !important;
+  text-decoration: none !important;
+}

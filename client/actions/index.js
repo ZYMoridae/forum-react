@@ -1,10 +1,11 @@
 import Zjax from '../utils/zjax';
+import ActionTypes from './ActionTypes';
 
 let nextTodoId = 0;
 var zjax = new Zjax();
 export const addTodo = text => {
   return {
-    type: 'ADD_TODO',
+    type: ActionTypes.ADD_TODO,
     id: nextTodoId++,
     text
   }
@@ -12,21 +13,21 @@ export const addTodo = text => {
 
 export const setVisibilityFilter = filter => {
   return {
-    type: 'SET_VISIBILITY_FILTER',
+    type: ActionTypes.SET_VISIBILITY_FILTER,
     filter
   }
 }
 
 export const toggleTodo = id => {
   return {
-    type: 'TOGGLE_TODO',
+    type: ActionTypes.TOGGLE_TODO,
     id
   }
 }
 
 function fetchingPosts() {
   return {
-    type: 'FETCHING_POSTS_PENDING',
+    type: ActionTypes.FETCHING_POSTS_PENDING,
     isFetching: true,
     isFetched: false
   }
@@ -34,7 +35,7 @@ function fetchingPosts() {
 
 function fetchingPostsError(err) {
   return {
-    type: 'FETCHING_POSTS_REJECTED',
+    type: ActionsTypes.FETCHING_POSTS_REJECTED,
     isFetching: false,
     isFetched: false,
     err: err
@@ -44,7 +45,7 @@ function fetchingPostsError(err) {
 
 function receivePosts(option, json, page_num) {
   return {
-    type: 'RECEIVE_POSTS',
+    type: ActionTypes.RECEIVE_POSTS,
     option: option,
     isFetching: false,
     isFetched: true,
@@ -60,7 +61,7 @@ function receivePosts(option, json, page_num) {
 
 function receiveTags(option, json) {
   return {
-    type: 'RECEIVE_TAGS',
+    type: ActionTypes.RECEIVE_TAGS,
     tags: json,
     receivedAt: Date.now()
   }
@@ -68,7 +69,7 @@ function receiveTags(option, json) {
 
 export function resetDashboardStatus() {
   return {
-    type: 'RESET_DASHBOARD_STATUS'
+    type: ActionTypes.RESET_DASHBOARD_STATUS
   }
 }
 
@@ -118,10 +119,9 @@ export const fetchTags = (option) => {
 
 // -------- User Actions ----------
 
-function receieveUser(option, json) {
+function receieveUser(json) {
   return {
-    type: 'RECEIVE_USER',
-    option: option,
+    type: ActionTypes.RECEIVE_USER,
     isFetchingUser: false,
     isFetchedUser: true,
     info: json,
@@ -131,18 +131,18 @@ function receieveUser(option, json) {
 
 function fetchingUser(option, json) {
   return {
-    type: 'FETCHING_USER_PENDING',
+    type: ActionTypes.FETCHING_USER_PENDING,
     option: option,
-    isFetching: true,
-    isFetched: false
+    isFetchingUser: true,
+    isFetchedUser: false
   }
 }
 
 function fetchingUserError(err) {
   return {
-    type: 'FETCHING_USER_PENDING',
-    isFetching: false,
-    isFetched: true
+    type: ActionTypes.FETCHING_USER_REJECTED,
+    isFetchedUser: false,
+    isFetchedUser: true
   }
 }
 
@@ -156,7 +156,7 @@ export const fetchUserInfo = (option) => {
         method: 'get'
       },
       successCallback: (response) => {
-        dispatch(receieveUser(option, response.data));
+        dispatch(receieveUser(response.data));
       },
       failureCallback: (err) => {
         dispatch(fetchingUserError(err));
@@ -167,18 +167,88 @@ export const fetchUserInfo = (option) => {
 
 export const inputOnChange = (name, value) => {
   return {
-    type: 'INPUT_CHANGE',
+    type: ActionTypes.INPUT_CHANGE,
     name: name,
     value: value
   }
 }
 
 
+// Login
+
+export const accountLogin = (formData) => {
+  return function (dispatch) {
+    dispatch(fetchingUser());
+    zjax.request({
+      url: '/api/v5/email/signup',
+      option: {
+        method: 'post',
+        params: {
+          email: formData.formEmail,
+          password: formData.formPassword
+        }
+      },
+      successCallback: (response) => {
+        dispatch(receieveUser(response.data));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchingUserError(err));
+      }
+    })
+  }
+
+
+  return {
+    type: ActionTypes.SUBMIT_FORM
+  }
+}
+
+
+export const logOut = () => {
+  return {
+    type: ActionTypes.LOG_OUT
+  }
+}
+
+
+export const loginModalOpen = () => {
+  return {
+    type: ActionTypes.LOGIN_MODAL_OPEN
+  }
+}
+
+export const loginModalClose = () => {
+  return {
+    type: ActionTypes.LOGIN_MODAL_CLOSE
+  }
+}
+
+export const fbLoginCallback = (authResponse) => {
+  return function (dispatch) {
+    dispatch(fetchingUser());
+    zjax.request({
+      url: '/api/v2/facebook/login',
+      option: {
+        method: 'post',
+        params: {
+          facebook_token: authResponse.accessToken
+        }
+      },
+      successCallback: (response) => {
+        dispatch(receieveUser(response.data));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchingUserError(err))
+      }
+    })
+  }
+}
+
 // ----------- Post Actions -----------
 
 function receievePost(option, json) {
   return {
-    type: 'RECEIVE_POST',
+    type: ActionTypes.RECEIVE_POST,
     option: option,
     isFetching: false,
     isFetched: true,
@@ -190,7 +260,7 @@ function receievePost(option, json) {
 
 function fetchingPost(option, json) {
   return {
-    type: 'FETCHING_POST_PENDING',
+    type: ActionTypes.FETCHING_POST_PENDING,
     option: option,
     isFetching: true,
     isFetched: false    
@@ -199,7 +269,7 @@ function fetchingPost(option, json) {
 
 function fetchingPostError(err) {
   return {
-    type: 'FETCHING_POST_REJECTED',
+    type: ActionTypes.FETCHING_POST_REJECTED,
     isFetching: false,
     isFetched: true
   }
@@ -226,7 +296,7 @@ export const fetchPostInfo = (option) => {
 
 function receievePostComments(option, json, hasMoreComments) {
   return {
-    type: 'RECEIVE_POST_COMMENTS',
+    type: ActionTypes.RECEIVE_POST_COMMENTS,
     option: option,
     isFetchingPostComments: false,
     isFetchedPostComments: true,
@@ -239,7 +309,7 @@ function receievePostComments(option, json, hasMoreComments) {
 
 function fetchingPostComments(option, json) {
   return {
-    type: 'FETCHING_POST_COMMENTS_PENDING',
+    type: ActionTypes.FETCHING_POST_COMMENTS_PENDING,
     option: option,
     isFetchingPostComments: true,
     isFetchedPostComments: false    
@@ -249,7 +319,7 @@ function fetchingPostComments(option, json) {
 
 function fetchingPostCommentsError(err) {
   return {
-    type: 'FETCHING_POST_COMMENTS_REJECTED',
+    type: ActionTypes.FETCHING_POST_COMMENTS_REJECTED,
     isFetchingPostComments: false,
     isFetchedPostComments: true
   }
@@ -283,7 +353,7 @@ export const fetchPostComments = (option) => {
 
 function followPost(option, json) {
   return {
-    type: 'FOLLOW_POST',
+    type: ActionTypes.FOLLOW_POST,
     id: option.id,
     isFollow: option.isFollow,
     time: Date.now()    
@@ -293,7 +363,7 @@ function followPost(option, json) {
 
 function unfollowPost(option, json) {
   return {
-    type: 'UNFOLLOW_POST',
+    type: ActionTypes.UNFOLLOW_POST,
     id: option.id,
     isFollow: option.isFollow,
     time: Date.now()    

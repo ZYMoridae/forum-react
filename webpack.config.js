@@ -18,7 +18,7 @@ module.exports = {
   },
   devServer: {
     proxy: { // proxy URLs to backend development server
-      '/api': {
+      '/': {
         target: 'http://kayla.pixelforcesystems.com.au/',
         secure: false,
         changeOrigin: true
