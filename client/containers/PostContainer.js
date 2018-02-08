@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { toggleTodo, updatePosts, followPostAction } from '../actions';
+import { followPostAction } from '../actions';
 import Post from '../components/post/Post';
 
 const mapStateToProps = state => {

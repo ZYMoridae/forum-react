@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage';
 const authPersistConfig = {
   key: 'UserReducer',
   storage,
-  blacklist: ['formEmail', 'formPassword', 'isLoginModalOpen', 'isFetchingUser', 'isFetchedUser']
+  blacklist: ['formEmail', 'formPassword', 'isLoginModalOpen', 'isFetchingUser', 'isFetchedUser', 'isLoadingNotification', 'searchTerm', 'searchResults']
 }
 
 let initState = {
@@ -15,6 +15,11 @@ let initState = {
   formEmail: '',
   formPassword: '',
   isLoginModalOpen: false,
+  // notification
+  isLoadingNotification: false,
+  searchTerm: '',
+  searchResults: [],
+  err: null
 }
 const userReducer = (state = initState, action) => {
   switch (action.type) {
@@ -32,6 +37,12 @@ const userReducer = (state = initState, action) => {
       return Object.assign({}, state, {isLoginModalOpen: false})
     case 'LOG_OUT':
       return Object.assign({}, state, {info: null})
+    case 'FETCHING_NOTIFICATION_PENDING':
+      return Object.assign({}, state, {isLoadingNotification: true})
+    case 'RECEIVE_NOTIFICATION':
+      return Object.assign({}, state, {searchResults: action.notifications, isLoadingNotification: false})
+    case 'FETCHING_NOTIFICATION_REJECTED':
+      return Object.assign({}, state, {err: action.err, isLoadingNotification: false})
     default:
       return state
   }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { toggleTodo, updatePosts } from '../actions';
+import { updatePosts } from '../actions';
 import Dashboard from '../components/Dashboard'
 
 const mapStateToProps = state => {

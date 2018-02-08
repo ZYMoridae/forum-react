@@ -1,34 +1,17 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { toggleTodo, updatePosts, fetchTags, resetDashboardStatus} from '../actions';
+import { updatePosts, fetchTags } from '../actions';
 import SecondNavigator from './post/SecondNavigator';
 import PostList from './post/PostList';
 import Zjax from '../utils/zjax';
-import PropTypes from 'prop-types';
 import './Dashboard.css';
 import Spinner from 'react-spinkit';
-import TextEditor from './editor/TextEditor';
 
 function Loading(props) {
   return props.isFetching ? <div className="Dashboard-spinner"><Spinner name="cube-grid"/></div> : ''
 }
 
 class Dashboard extends Component {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		requestParams: {
-	// 			perPage: props.perPage || 20,
-	// 			includeBody: props.includeBody || true,
-	// 			page: 1,
-	// 			order: props.order || 'last_time'
-	// 		}
-	// 	};
-	// 	this.zjax = new Zjax();
-
-	// }
 	componentDidMount() {
-    this.props.dispatch(resetDashboardStatus());
 		this.props.dispatch(updatePosts());
 		this.props.dispatch(fetchTags());
 
@@ -50,16 +33,6 @@ class Dashboard extends Component {
 
   render() {
   	const {infos, onTodoClick, isFetching, selectTagId, userInfo} = this.props;
-  	// if(!isFetching) {
-	  //   return (
-	  //     <div className="Dashboard">
-	  //     	<SecondNavigator onClick={this.props.onTodoClick}></SecondNavigator>
-	  //     	<PostList posts={infos.posts}></PostList>
-	  //     	<a className="LoadMore-btn">Load More</a>
-	  //     </div>
-	  //   )  		
-  	// }
-    //<a className="LoadMore-btn">Load More</a> 
     return (
       <div className="Dashboard">
         <SecondNavigator onClick={onTodoClick} selectTagId={selectTagId} userInfo={userInfo}></SecondNavigator>
@@ -69,17 +42,5 @@ class Dashboard extends Component {
     ) 
   }
 }
-
-// const Dashboard = ({infos}) => (
-//  	<div className="dashboard">
-//     <PostList posts={infos && infos.posts ? infos.posts : []}></PostList>
-//   </div>
-// );
-
-// Dashboard.propTypes = {
-// 	infos: PropTypes.shape({
-// 		posts: PropTypes.array
-// 	})
-// }
 
 export default Dashboard;

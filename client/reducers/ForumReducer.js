@@ -42,16 +42,6 @@ const forumReducer = (state = initState, action) => {
       return Object.assign({}, state, {selectTagId: action.tag_id, isFetching: action.isFetching, page_num: action.page_num, isFetched: action.isFetched, infos: {posts: [].concat(state.infos.posts, action.infos.posts)}})
     case 'RECEIVE_TAGS':
       return Object.assign({}, state, {tags: action.tags, page_num: 1})
-    case 'RESET_DASHBOARD_STATUS':
-      return {
-        isFetching: false,
-        isFetched: false,
-        infos: {
-          posts: []
-        },
-        tags: [],
-        page_num: 1
-      }
     default:
       return state
   }

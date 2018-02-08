@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { fetchUserInfo } from '../actions';
 import './GlobalHeader.css';
 import logo from './logo.svg';
-import UserPlaceholder from './user_placeholder.svg';
-import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
-import { Dropdown, Image, Modal, Button, Divider, Form, Checkbox, Icon} from 'semantic-ui-react';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import { Dropdown, Image, Modal, Button, Divider, Form, Checkbox, Icon, Search} from 'semantic-ui-react';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 const Trigger = (props) => {
   return (
@@ -56,16 +54,34 @@ const DropdownOptions = (logOut) => {
   ]
 }
 
+
+const SearchBar = (props) => {
+
+  const {isLoadingNotification, searchTerm, searchResults, searchTermChange} = props;
+
+
+  let handleResultSelect = (e, { result }) => {
+    e.preventDefault(); 
+    window.location.assign(`/#/post/${[result.id, result.slug].join('-')}`); 
+    window.location.reload();
+  }
+
+  let handleSearchChange = (e, { value }) => {searchTermChange(value);}
+
+  return  <Search loading={isLoadingNotification} onResultSelect={handleResultSelect} onSearchChange={handleSearchChange} results={searchResults} {...this.props} />
+}
+
+
 export default class GlobalHeader extends Component {
   componentDidMount() {
     this.props.dispatch(fetchUserInfo());
   }
   render() {
-    const {isFetchingUser, isFetchedUser, info, formInputOnChange, formEmail, formPassword, fbLoginCallback, isLoginModalOpen, loginModalOpen, loginModalClose, logOut, accountLogin} = this.props;
+    const {info, formEmail, formPassword, logOut} = this.props;
 
     let formData = {formEmail: formEmail, formPassword: formPassword};
 
-    let userControlComponent = <LoginModal formInputOnChange={formInputOnChange} formData={formData} fbLoginCallback={fbLoginCallback} isLoginModalOpen={isLoginModalOpen} loginModalOpen={loginModalOpen} loginModalClose={loginModalClose} isFetchingUser={isFetchingUser} accountLogin={accountLogin}/>
+    let userControlComponent = <LoginModal formData={formData} {...this.props}/>
 
     if(info) {
       userControlComponent = <Dropdown keeponscreen="true" trigger={<Trigger userInfo={info}/>} options={DropdownOptions(logOut)} pointing='top left' icon={null} />
@@ -81,6 +97,9 @@ export default class GlobalHeader extends Component {
           </h1>
           <div className="GlobalHeader-secondary">
             <ul className="GlobalHeader-header-controls">
+              <li className="GlobalHeader-item-session GlobalHeader-item">
+                <SearchBar {...this.props}/>
+              </li>
               <li className="GlobalHeader-item-button GlobalHeader-item">
                 <a href="https://www.sweat.com/collections/gear">
                   <span>SHOP</span>
@@ -99,11 +118,11 @@ export default class GlobalHeader extends Component {
               <li className="GlobalHeader-item-session GlobalHeader-item User-control">
                 {userControlComponent}
               </li>
-              <li className="GlobalHeader-item-session GlobalHeader-item">
+{/*              <li className="GlobalHeader-item-session GlobalHeader-item">
                 <a>
                   <FontAwesomeIcon className="PostList-comment-icon" icon={faSearch} size="1x"/>
                 </a>
-              </li>
+              </li>*/}
             </ul>
           </div>
         </div>

@@ -67,12 +67,6 @@ function receiveTags(option, json) {
   }
 }
 
-export function resetDashboardStatus() {
-  return {
-    type: ActionTypes.RESET_DASHBOARD_STATUS
-  }
-}
-
 export const updatePosts = (option) => {
   return function (dispatch) {
     dispatch(fetchingPosts());
@@ -243,6 +237,61 @@ export const fbLoginCallback = (authResponse) => {
     })
   }
 }
+
+// Notification
+
+
+function fetchingNotification() {
+  return {
+    type: 'FETCHING_NOTIFICATION_PENDING'
+  }
+}
+
+function receieveNotification(json) {
+  return {
+    type: 'RECEIVE_NOTIFICATION',
+    notifications: json
+  }
+}
+
+function fetchingNotificationError(err) {
+  return {
+    type: 'FETCHING_NOTIFICATION_REJECTED',
+    err: err
+  }
+}
+
+export const searchTermChange = (searchTerm) => {
+  return function (dispatch) {
+    dispatch(fetchingNotification());
+    zjax.request({
+      url: '/api/v1/forum/posts',
+      option: {
+        method: 'get',
+        params: {
+          per_page: 5,
+          search_term: searchTerm
+        }
+      },
+      successCallback: (response) => {
+        response.data = response.data.map(notification => {
+          return {
+            id: notification.id,
+            title: notification.title,
+            description: notification.user.username,
+            image: notification.user.image,
+            slug: notification.slug
+          }
+        });
+        dispatch(receieveNotification(response.data));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchingNotificationError(err))
+      }
+    })    
+  }
+}
+
 
 // ----------- Post Actions -----------
 
