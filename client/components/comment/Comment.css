@@ -26,3 +26,6 @@
 .Comment-reply-block .Comment-user-name {
   color: grey;
 }
+.comment .author {
+  display: inline-block;
+}

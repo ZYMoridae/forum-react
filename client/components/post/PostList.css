@@ -1,5 +1,7 @@
 .PostList {
 	list-style: none;
+	margin-left: 100px;
+	margin-right: 100px;
 }
 .PostList-hero-img {
 	width: 50px;
