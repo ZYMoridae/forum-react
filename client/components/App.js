@@ -6,6 +6,7 @@ import GlobalHeader from './GlobalHeader';
 import MyDashboard from '../containers/MyDashboard';
 import GlobalHeaderContainer from '../containers/GlobalHeaderContainer';
 import PostContainer from '../containers/PostContainer';
+import SettingContainer from '../containers/SettingContainer';
 // import axios from 'axios';
 import Zjax from '../utils/zjax';
 
@@ -38,10 +39,18 @@ const BasicExample = () => (
       <Route exact path="/" component={Home}/>
 {/*      <Route path="/about" component={About}/>*/}
       {/*<Route path="/topics" component={Topics}/>*/}
+      <Route path="/setting" component={SettingPage}/>
       <Route path="/post/:id" component={Post}/>
     </div>
   </Router>
 )
+
+
+const SettingPage = () => (
+  <div className="Container">
+    <SettingContainer />
+  </div>
+) 
 
 
 const Post = ({ match }) => (

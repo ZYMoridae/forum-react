@@ -437,3 +437,51 @@ export const followPostAction = (option) => {
     })
   }
 }
+
+
+// ---------  Setting -------
+
+function fetchingUserCardInfo() {
+  return {
+    type: 'FETCHING_USER_CARD_INFO_PENDING',
+    isFetchingUserCardInfo: true,
+    isFetchedUserCardInfo: false
+  }
+}
+
+function receieveUserCardInfo(json) {
+  return {
+    type: 'RECEIVE_USER_CARD_INFO',
+    userCardInfo: json,
+    isFetchingUserCardInfo: false,
+    isFetchedUserCardInfo: true
+  }
+}
+
+function fetchingUserCardInfoError(err) {
+  return {
+    type: 'FETCHING_USER_CARD_INFO_REJECTED',
+    err: err,
+    isFetchingUserCardInfo: false,
+    isFetchedUserCardInfo: true
+  }
+}
+
+
+export const fetchUserCardInfo = (username) => {
+  return function(dispatch) {
+    dispatch(fetchingUserCardInfo());
+    zjax.request({
+      url: `/api/v1/forum/users/${username}`,
+      option: {
+        method: 'get'
+      },
+      successCallback: (response) => {
+        dispatch(receieveUserCardInfo(response.data));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchingUserCardInfoError(err));
+      }
+    })
+  }
+}
