@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { fetchUserInfo } from '../actions';
+import { fetchUserInfo, fetchNotifications } from '../actions';
 import './GlobalHeader.css';
 import logo from './logo.svg';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
-import { Dropdown, Image, Modal, Button, Divider, Form, Checkbox, Icon, Search} from 'semantic-ui-react';
+import { Dropdown, Image, Modal, Button, Divider, Form, Checkbox, Icon, Search, Menu} from 'semantic-ui-react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import NotificationList from './notification/NotificationList';
+import { Link } from 'react-router-dom';
 
 const Trigger = (props) => {
   return (
@@ -47,9 +49,14 @@ const LoginModal = (props) => {
 }
 
 const DropdownOptions = (logOut) => {
+  const redirectToSetting = () => {
+    window.location.assign(`/#/setting`); 
+    window.location.reload();
+  }
+
   return [
     { key: 'user', value: 'user', text: 'Account', icon: 'user' },
-    { key: 'settings', value: 'settings', text: 'Settings', icon: 'settings' },
+    { key: 'settings', value: 'settings', text: <Link to={`setting`} className="header-setting-link">Settings</Link>, icon: 'settings' },
     { key: 'sign-out', value: 'sign-out', text: <span onClick={logOut}>Sign out</span>, icon: 'sign out' }
   ]
 }
@@ -57,7 +64,11 @@ const DropdownOptions = (logOut) => {
 
 const SearchBar = (props) => {
 
-  const {isLoadingNotification, searchTerm, searchResults, searchTermChange} = props;
+  const {isLoadingSearchResults, searchTerm, searchResults, searchTermChange} = props;
+
+  searchResults.forEach((item, index) => {
+    item = Object.assign(item, {key: index});
+  });
 
 
   let handleResultSelect = (e, { result }) => {
@@ -68,16 +79,17 @@ const SearchBar = (props) => {
 
   let handleSearchChange = (e, { value }) => {searchTermChange(value);}
 
-  return  <Search loading={isLoadingNotification} onResultSelect={handleResultSelect} onSearchChange={handleSearchChange} results={searchResults} {...this.props} />
+  return  <Search loading={isLoadingSearchResults} onResultSelect={handleResultSelect} onSearchChange={handleSearchChange} results={searchResults} {...this.props} />
 }
 
 
 export default class GlobalHeader extends Component {
   componentDidMount() {
     this.props.dispatch(fetchUserInfo());
+    this.props.dispatch(fetchNotifications());
   }
   render() {
-    const {info, formEmail, formPassword, logOut} = this.props;
+    const {info, formEmail, formPassword, logOut, isLoadingNotifications, notifications, notificationTotalCount} = this.props;
 
     let formData = {formEmail: formEmail, formPassword: formPassword};
 
@@ -89,7 +101,27 @@ export default class GlobalHeader extends Component {
 
     return (
       <div className="GlobalHeader">
-        <div className="GlobalHeader-container">
+
+        <Menu inverted fixed='top' size='massive' color='teal'>
+          <Menu.Item name='home' active={true} children={<a href='/'>
+              <img src="https://5df605d12ae556cf67ab-1f1de8f87db6161fed354e7e8d0d6d89.ssl.cf5.rackcdn.com/logo-abz62jo2.png" className="Logo"/>
+            </a>}/>
+          <Menu.Menu position='right'>
+            <Menu.Item active={false} children={<a href="https://www.sweat.com/collections/gear" target='_blank'>
+                  <span>SHOP</span>
+                </a>}/>
+            <Menu.Item active={false} children={<a href="https://www.sweat.com/blogs/news" target='_blank'>
+                  <span>BLOG</span>
+                </a>}/>
+            <Menu.Item active={false} children={<a>
+                  <span>FORUM</span>
+                </a>}/>
+            <Menu.Item active={false} children={userControlComponent}/>
+          </Menu.Menu>
+        </Menu>
+
+
+{/*        <div className="GlobalHeader-container">
           <h1 className="Header-title">
             <a href='/'>
               <img src="https://5df605d12ae556cf67ab-1f1de8f87db6161fed354e7e8d0d6d89.ssl.cf5.rackcdn.com/logo-abz62jo2.png" className="Logo"/>
@@ -97,16 +129,19 @@ export default class GlobalHeader extends Component {
           </h1>
           <div className="GlobalHeader-secondary">
             <ul className="GlobalHeader-header-controls">
+              <li className="GlobalHeader-item-button GlobalHeader-item ">
+                <NotificationList notificationTotalCount={notificationTotalCount} notifications={notifications}/>
+              </li>
               <li className="GlobalHeader-item-session GlobalHeader-item">
                 <SearchBar {...this.props}/>
               </li>
               <li className="GlobalHeader-item-button GlobalHeader-item">
-                <a href="https://www.sweat.com/collections/gear">
+                <a href="https://www.sweat.com/collections/gear" target='_blank'>
                   <span>SHOP</span>
                 </a>
               </li>
               <li className="GlobalHeader-item-button GlobalHeader-item">
-                <a href="https://www.sweat.com/blogs/news">
+                <a href="https://www.sweat.com/blogs/news" target='_blank'>
                   <span>BLOG</span>
                 </a>
               </li>
@@ -118,14 +153,9 @@ export default class GlobalHeader extends Component {
               <li className="GlobalHeader-item-session GlobalHeader-item User-control">
                 {userControlComponent}
               </li>
-{/*              <li className="GlobalHeader-item-session GlobalHeader-item">
-                <a>
-                  <FontAwesomeIcon className="PostList-comment-icon" icon={faSearch} size="1x"/>
-                </a>
-              </li>*/}
             </ul>
           </div>
-        </div>
+        </div>*/}
       </div>
     )
   }

@@ -238,32 +238,32 @@ export const fbLoginCallback = (authResponse) => {
   }
 }
 
-// Notification
+// Search post
 
 
-function fetchingNotification() {
+function fetchingSearchPost() {
   return {
-    type: 'FETCHING_NOTIFICATION_PENDING'
+    type: 'FETCHING_SEARCHING_POST_PENDING'
   }
 }
 
-function receieveNotification(json) {
+function receieveSearchingPost(json) {
   return {
-    type: 'RECEIVE_NOTIFICATION',
+    type: 'RECEIVE_SEARCHING_POST',
     notifications: json
   }
 }
 
-function fetchingNotificationError(err) {
+function fetchingSearchPostError(err) {
   return {
-    type: 'FETCHING_NOTIFICATION_REJECTED',
+    type: 'FETCHING_SEARCHING_POST_REJECTED',
     err: err
   }
 }
 
 export const searchTermChange = (searchTerm) => {
   return function (dispatch) {
-    dispatch(fetchingNotification());
+    dispatch(fetchingSearchPost());
     zjax.request({
       url: '/api/v1/forum/posts',
       option: {
@@ -283,15 +283,61 @@ export const searchTermChange = (searchTerm) => {
             slug: notification.slug
           }
         });
-        dispatch(receieveNotification(response.data));
+        dispatch(receieveSearchingPost(response.data));
       },
       failureCallback: (err) => {
-        dispatch(fetchingNotificationError(err))
+        dispatch(fetchingSearchPostError(err))
       }
     })    
   }
 }
 
+
+// Notifications
+
+function fetchingNotifications() {
+  return {
+    type: 'FETCHING_NOTIFICATIONS_PENDING'
+  }
+}
+
+function receieveNotifications(json, total_count) {
+  return {
+    type: 'RECEIVE_NOTIFICATIONS',
+    notifications: json,
+    total_count: total_count
+  }
+}
+
+function fetchingNotificationsError(err) {
+  return {
+    type: 'FETCHING_NOTIFICATIONS_REJECTED',
+    err: err
+  }
+}
+
+
+export const fetchNotifications = () => {
+  return function (dispatch) {
+    dispatch(fetchingNotifications());
+    zjax.request({
+      url: '/api/v1/forum/notifications',
+      option: {
+        method: 'get',
+        params: {
+          page: 1,
+          per_page: 10
+        }
+      },
+      successCallback: (response) => {
+        dispatch(receieveNotifications(response.data, response.headers.total_count));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchingNotificationsError(err));
+      }
+    })
+  }
+}
 
 // ----------- Post Actions -----------
 
@@ -483,5 +529,11 @@ export const fetchUserCardInfo = (username) => {
         dispatch(fetchingUserCardInfoError(err));
       }
     })
+  }
+}
+
+export const toggleVisibility = () => {
+  return {
+    type: 'TOGGLE_VISIBILITY'
   }
 }

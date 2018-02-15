@@ -10,9 +10,12 @@ const mapStateToProps = state => {
     formEmail: state.UserReducer.formEmail,
     formPassword: state.UserReducer.formPassword,
     isLoginModalOpen: state.UserReducer.isLoginModalOpen,
-    isLoadingNotification: state.UserReducer.isLoadingNotification,
+    isLoadingSearchResults: state.UserReducer.isLoadingSearchResults,
     searchTerm: state.UserReducer.searchTerm,
-    searchResults: state.UserReducer.searchResults
+    searchResults: state.UserReducer.searchResults,
+    isLoadingNotifications: state.UserReducer.isLoadingNotifications,
+    notifications: state.UserReducer.notifications,
+    notificationTotalCount: state.UserReducer.notificationTotalCount
   }
 }
 

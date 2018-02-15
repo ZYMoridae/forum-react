@@ -1,4 +1,4 @@
-.GlobalHeader {
+/*.GlobalHeader {
 	position: fixed;
 	height: 64px;
 	top: 0;
@@ -81,6 +81,9 @@
 @keyframes GlobalHeader-hero-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}*/
+.Logo {
+  max-height: 30px;
 }
 .fb-login {
   margin-top: 10px !important;
@@ -97,4 +100,7 @@
 .User-control{
   margin-right: 35px !important;
   text-decoration: none !important;
+}
+.header-setting-link{
+  color: black !important;
 }

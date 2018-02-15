@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { followPostAction } from '../actions';
+import { followPostAction, toggleVisibility } from '../actions';
 import Setting from '../components/Setting';
 
 const mapStateToProps = state => {
@@ -7,13 +7,17 @@ const mapStateToProps = state => {
     userInfo: state.UserReducer.info,
     userCardInfo: state.SettingReducer.userCardInfo,
     isFetchedUserCardInfo: state.SettingReducer.isFetchedUserCardInfo,
-    isFetchingUserCardInfo: state.SettingReducer.isFetchingUserCardInfo
+    isFetchingUserCardInfo: state.SettingReducer.isFetchingUserCardInfo,
+    visible: state.SettingReducer.visible
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatch
+    dispatch,
+    toggleSideBar: (visible) => {
+      dispatch(toggleVisibility());
+    }
   }
 }
 

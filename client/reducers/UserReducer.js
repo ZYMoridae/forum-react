@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage';
 const authPersistConfig = {
   key: 'UserReducer',
   storage,
-  blacklist: ['formEmail', 'formPassword', 'isLoginModalOpen', 'isFetchingUser', 'isFetchedUser', 'isLoadingNotification', 'searchTerm', 'searchResults']
+  blacklist: ['formEmail', 'formPassword', 'isLoginModalOpen', 'isFetchingUser', 'isFetchedUser', 'isLoadingSearchResults', 'searchTerm', 'searchResults', 'isLoadingNotifications', 'notifications', 'notificationTotalCount']
 }
 
 let initState = {
@@ -15,10 +15,14 @@ let initState = {
   formEmail: '',
   formPassword: '',
   isLoginModalOpen: false,
-  // notification
-  isLoadingNotification: false,
+  // searcing posts
+  isLoadingSearchResults: false,
   searchTerm: '',
   searchResults: [],
+  // notifications
+  isLoadingNotifications: false,
+  notifications: [],
+  notificationTotalCount: 0,
   err: null
 }
 const userReducer = (state = initState, action) => {
@@ -37,12 +41,20 @@ const userReducer = (state = initState, action) => {
       return Object.assign({}, state, {isLoginModalOpen: false})
     case 'LOG_OUT':
       return Object.assign({}, state, {info: null})
-    case 'FETCHING_NOTIFICATION_PENDING':
-      return Object.assign({}, state, {isLoadingNotification: true})
-    case 'RECEIVE_NOTIFICATION':
-      return Object.assign({}, state, {searchResults: action.notifications, isLoadingNotification: false})
-    case 'FETCHING_NOTIFICATION_REJECTED':
-      return Object.assign({}, state, {err: action.err, isLoadingNotification: false})
+    case 'FETCHING_SEARCHING_POST_PENDING':
+      return Object.assign({}, state, {isLoadingSearchResults: true})
+    case 'RECEIVE_SEARCHING_POST':
+      let new_status = Object.assign({}, state, {isLoadingSearchResults: false})
+      new_status.searchResults = action.notifications;
+      return new_status
+    case 'FETCHING_SEARCHING_POST_REJECTED':
+      return Object.assign({}, state, {err: action.err, isLoadingSearchResults: false})
+    case 'FETCHING_NOTIFICATIONS_PENDING':
+      return Object.assign({}, state, {isLoadingNotifications: true})
+    case 'RECEIVE_NOTIFICATIONS':
+      return Object.assign({}, state, {isLoadingNotifications: false, notifications: action.notifications, notificationTotalCount: action.total_count})
+    case 'FETCHING_NOTIFICATIONS_REJECTED':
+      return Object.assign({}, state, {err: action.err})
     default:
       return state
   }
