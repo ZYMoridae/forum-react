@@ -243,20 +243,20 @@ export const fbLoginCallback = (authResponse) => {
 
 function fetchingSearchPost() {
   return {
-    type: 'FETCHING_SEARCHING_POST_PENDING'
+    type: ActionTypes.FETCHING_SEARCHING_POST_PENDING
   }
 }
 
 function receieveSearchingPost(json) {
   return {
-    type: 'RECEIVE_SEARCHING_POST',
+    type: ActionTypes.RECEIVE_SEARCHING_POST,
     notifications: json
   }
 }
 
 function fetchingSearchPostError(err) {
   return {
-    type: 'FETCHING_SEARCHING_POST_REJECTED',
+    type: ActionTypes.FETCHING_SEARCHING_POST_REJECTED,
     err: err
   }
 }
@@ -297,13 +297,13 @@ export const searchTermChange = (searchTerm) => {
 
 function fetchingNotifications() {
   return {
-    type: 'FETCHING_NOTIFICATIONS_PENDING'
+    type: ActionTypes.FETCHING_NOTIFICATIONS_PENDING
   }
 }
 
 function receieveNotifications(json, total_count) {
   return {
-    type: 'RECEIVE_NOTIFICATIONS',
+    type: ActionTypes.RECEIVE_NOTIFICATIONS,
     notifications: json,
     total_count: total_count
   }
@@ -311,7 +311,7 @@ function receieveNotifications(json, total_count) {
 
 function fetchingNotificationsError(err) {
   return {
-    type: 'FETCHING_NOTIFICATIONS_REJECTED',
+    type: ActionTypes.FETCHING_NOTIFICATIONS_REJECTED,
     err: err
   }
 }
@@ -489,7 +489,7 @@ export const followPostAction = (option) => {
 
 function fetchingUserCardInfo() {
   return {
-    type: 'FETCHING_USER_CARD_INFO_PENDING',
+    type: ActionTypes.FETCHING_USER_CARD_INFO_PENDING,
     isFetchingUserCardInfo: true,
     isFetchedUserCardInfo: false
   }
@@ -497,7 +497,7 @@ function fetchingUserCardInfo() {
 
 function receieveUserCardInfo(json) {
   return {
-    type: 'RECEIVE_USER_CARD_INFO',
+    type: ActionTypes.RECEIVE_USER_CARD_INFO,
     userCardInfo: json,
     isFetchingUserCardInfo: false,
     isFetchedUserCardInfo: true
@@ -506,7 +506,7 @@ function receieveUserCardInfo(json) {
 
 function fetchingUserCardInfoError(err) {
   return {
-    type: 'FETCHING_USER_CARD_INFO_REJECTED',
+    type: ActionTypes.FETCHING_USER_CARD_INFO_REJECTED,
     err: err,
     isFetchingUserCardInfo: false,
     isFetchedUserCardInfo: true
@@ -534,6 +534,48 @@ export const fetchUserCardInfo = (username) => {
 
 export const toggleVisibility = () => {
   return {
-    type: 'TOGGLE_VISIBILITY'
+    type: ActionTypes.TOGGLE_VISIBILITY
   }
 }
+
+// like comment
+function likeCommentSuccess(id, isLiked) {
+  return {
+    type: ActionTypes.LIKE_COMMENT_SUCCESS,
+    id: id,
+    isLiked: isLiked
+  }
+}
+
+function likeCommentFailure(err) {
+  return {
+    type: ActionTypes.LIKE_COMMENT_FAILURE,
+    err: err
+  }
+}
+
+export const likeComment = (id, isLiked) => {
+  return function(dispatch) {
+    zjax.request({
+      url: `/api/v1/forum/comments/${id}/like`,
+      option: {
+        method: !isLiked ? 'post' : 'delete'
+      },
+      successCallback: (response) => {
+        dispatch(likeCommentSuccess(id, isLiked));
+      },
+      failureCallback: (err) => {
+        dispatch(likeCommentFailure(err));
+      }
+    })
+  }
+}
+
+
+export const onTagSelect = (tagInfo) => {
+  return {
+    type: ActionTypes.TAG_SELECT,
+    tagInfo: tagInfo
+  }
+}
+

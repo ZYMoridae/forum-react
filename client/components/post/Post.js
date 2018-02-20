@@ -9,8 +9,39 @@ import faShare from '@fortawesome/fontawesome-free-solid/faShare';
 import faStar from '@fortawesome/fontawesome-free-solid/faStar';
 import faStarO from '@fortawesome/fontawesome-free-regular/faStar';
 import faEyeSlash from '@fortawesome/fontawesome-free-solid/faEyeSlash';
-import { Button, Dropdown, Icon } from 'semantic-ui-react';
+import { Button, Dropdown, Icon, Modal, Image, Header, List} from 'semantic-ui-react';
+import {
+  FacebookShareButton,
+  GooglePlusShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  TelegramShareButton,
+  WhatsappShareButton,
+  PinterestShareButton,
+  VKShareButton,
+  OKShareButton,
+  RedditShareButton,
+  TumblrShareButton,
+  LivejournalShareButton,
+  EmailShareButton,
+} from 'react-share';
 
+import {
+  FacebookIcon,
+  TwitterIcon,
+  TelegramIcon,
+  WhatsappIcon,
+  GooglePlusIcon,
+  LinkedinIcon,
+  PinterestIcon,
+  VKIcon,
+  OKIcon,
+  RedditIcon,
+  TumblrIcon,
+  LivejournalIcon,
+  MailruIcon,
+  EmailIcon,
+} from 'react-share';
 
 function PostDetails(props) {
   const postInfo = props.post;
@@ -35,7 +66,7 @@ function PostDetails(props) {
                 {postInfo.tags.map((tag, index) => <span className="Post-tag" key={tag.id}>{tag.name}{index === postInfo.tags.length - 1 ? '' : ','}</span>)}
               </h5>
               <div className="Post-comments-container">
-                {props.comments.map(comment => <Comment key={comment.id} comment={comment} />)}
+                {props.comments.map(comment => <Comment key={comment.id} comment={comment} commentLike={props.commentLike}/>)}
                 {replyBlock}
                 {spinnerBlock}
               </div>
@@ -43,13 +74,42 @@ function PostDetails(props) {
           </div>
 }
 
+
+function ShareModalBox(props) {
+  let shareUrl = window.location.hostname;
+  return <Modal size='tiny' trigger={<Button color='pink' className="Post-action-item-btn"><FontAwesomeIcon className="PostList-comment-icon" icon={faShareAlt} size="1x"/>
+                Share</Button>}>
+          <Modal.Header>Share</Modal.Header>
+          <Modal.Content image>
+            <Modal.Description>
+              <List horizontal>
+                <List.Item>
+                  <List.Content>
+                    <FacebookShareButton url={shareUrl} children={<FacebookIcon round={true} size={32}/>}/>
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Content>
+                    <GooglePlusShareButton url={shareUrl} children={<GooglePlusIcon round={true} size={32}/>}/>
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Content>
+                    <TwitterShareButton url={shareUrl} children={<TwitterIcon round={true} size={32}/>}/>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
+}
+
+
+
 function PostActions(props) {
   return  <div className="Post-actions">
             <div className="Post-action-item">
-              <Button color='pink' className="Post-action-item-btn">
-                <FontAwesomeIcon className="PostList-comment-icon" icon={faShareAlt} size="1x"/>
-                Share
-              </Button>
+              <ShareModalBox />
             </div>
             <div className="Post-action-item">
               <Button color='purple' className="Post-action-item-btn">
@@ -113,10 +173,10 @@ export default class Post extends Component {
     }
   }
   render() {
-    const { isFetchingPost, info, isFetchingPostComments, hasMoreComments, postComments, userInfo, isFollowPost, onFollowClick} = this.props;
+    const { isFetchingPost, info, isFetchingPostComments, hasMoreComments, postComments, userInfo, isFollowPost, onFollowClick, commentLike} = this.props;
     return (
       <div className="Post">
-        { info ? <PostDetails onFollowClick={onFollowClick} post={info} comments={postComments} isFollowPost={isFollowPost} userInfo={userInfo} isFetchingPostComments={isFetchingPostComments} hasMoreComments={hasMoreComments}/> : <div className="Post-spinner"><Spinner name="cube-grid"/></div> }
+        { info ? <PostDetails onFollowClick={onFollowClick} post={info} comments={postComments} isFollowPost={isFollowPost} userInfo={userInfo} isFetchingPostComments={isFetchingPostComments} hasMoreComments={hasMoreComments} commentLike={commentLike}/> : <div className="Post-spinner"><Spinner name="cube-grid"/></div> }
       </div>
     )
   }

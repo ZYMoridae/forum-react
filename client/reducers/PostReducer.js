@@ -60,7 +60,15 @@ const postReducer = (state = initState, action) => {
     case 'UNFOLLOW_POST':
       return Object.assign({}, state, {
         isFollowPost: false
-      })      
+      })
+    case 'LIKE_COMMENT_SUCCESS':
+      var newComments = state.postComments.slice();
+      newComments.forEach(item => {
+        if(item.id === action.id) {
+          item.liked_by_user = !action.isLiked;
+        }
+      });
+      return Object.assign({}, state, {postComments: newComments})  
     default:
       return state
   }

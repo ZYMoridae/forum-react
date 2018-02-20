@@ -32,10 +32,10 @@ class Dashboard extends Component {
   }
 
   render() {
-  	const {infos, onTodoClick, isFetching, selectTagId, userInfo} = this.props;
+  	const {infos, onTodoClick, isFetching, selectTagId, userInfo, tags, tagInfos, tagClick} = this.props;
     return (
       <div className="Dashboard">
-        <SecondNavigator onClick={onTodoClick} selectTagId={selectTagId} userInfo={userInfo}></SecondNavigator>
+        <SecondNavigator onClick={onTodoClick} selectTagId={selectTagId} userInfo={userInfo} tags={tags} tagInfos={tagInfos} tagClick={tagClick}></SecondNavigator>
         <PostList posts={infos.posts}></PostList>
         <Loading isFetching={isFetching}/>
       </div>

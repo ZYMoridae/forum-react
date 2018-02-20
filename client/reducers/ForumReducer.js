@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage';
 const forumPersistConfig = {
   key: 'ForumReducer',
   storage,
-  blacklist: ['infos']
+  blacklist: ['infos', 'tagInfos']
 }
 
 let initState = {
@@ -16,7 +16,8 @@ let initState = {
   },
   tags: [],
   page_num: 1,
-  selectTagId: 1
+  selectTagId: 1,
+  tagInfos: []
 }
 const forumReducer = (state = initState, action) => {
   switch (action.type) {
@@ -42,6 +43,18 @@ const forumReducer = (state = initState, action) => {
       return Object.assign({}, state, {selectTagId: action.tag_id, isFetching: action.isFetching, page_num: action.page_num, isFetched: action.isFetched, infos: {posts: [].concat(state.infos.posts, action.infos.posts)}})
     case 'RECEIVE_TAGS':
       return Object.assign({}, state, {tags: action.tags, page_num: 1})
+    case 'TAG_SELECT':
+      let newTagInfos = state.tagInfos.slice(),
+          allTagIds = newTagInfos.map(tag => tag.id),
+          tagIndex = allTagIds.indexOf(action.tagInfo.id);
+      
+      if(tagIndex === -1) {
+        newTagInfos.push(action.tagInfo);
+      }else {
+        newTagInfos = newTagInfos.filter(tag => tag.id !== action.tagInfo.id)
+      }
+      console.log(newTagInfos)
+      return Object.assign({}, state, {tagInfos: newTagInfos})
     default:
       return state
   }

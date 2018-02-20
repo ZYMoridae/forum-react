@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { followPostAction } from '../actions';
+import { followPostAction, likeComment} from '../actions';
 import Post from '../components/post/Post';
 
 const mapStateToProps = state => {
@@ -21,6 +21,9 @@ const mapDispatchToProps = dispatch => {
     dispatch,
     onFollowClick: (id, isFollow) => {
       dispatch(followPostAction({id: id, isFollow: isFollow}));
+    },
+    commentLike: (id, isLiked) => {
+      dispatch(likeComment(id, isLiked));
     }
   }
 }

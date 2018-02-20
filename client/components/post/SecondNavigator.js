@@ -23,9 +23,9 @@ const TagDropdown = (props) => {
 
 class SecondNavigator extends Component {
   render() {
-    const {tags, selectTagId, onClick, userInfo} = this.props;
+    const {tags, selectTagId, onClick, userInfo, tagInfos, tagClick} = this.props;
     return  <div className="SecondNavigator">
-              <TextEditor userInfo={userInfo}/>
+              <TextEditor userInfo={userInfo} tags={tags} tagInfos={tagInfos} tagClick={tagClick}/>
               <TagDropdown tags={tags} selectTagId={selectTagId} onClick={onClick}/>
             </div>
   }

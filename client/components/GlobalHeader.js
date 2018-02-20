@@ -102,7 +102,7 @@ export default class GlobalHeader extends Component {
     return (
       <div className="GlobalHeader">
 
-        <Menu inverted fixed='top' size='massive' color='teal'>
+        <Menu inverted fixed='top' size='massive' color='blue'>
           <Menu.Item name='home' active={true} children={<a href='/'>
               <img src="https://5df605d12ae556cf67ab-1f1de8f87db6161fed354e7e8d0d6d89.ssl.cf5.rackcdn.com/logo-abz62jo2.png" className="Logo"/>
             </a>}/>

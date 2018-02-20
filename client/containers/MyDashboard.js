@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { updatePosts } from '../actions';
+import { updatePosts, onTagSelect } from '../actions';
 import Dashboard from '../components/Dashboard'
 
 const mapStateToProps = state => {
@@ -8,7 +8,8 @@ const mapStateToProps = state => {
     isFetching: state.ForumReducer.isFetching,
     page_num: state.ForumReducer.page_num,
     selectTagId: state.ForumReducer.selectTagId,
-    userInfo: state.UserReducer.info
+    userInfo: state.UserReducer.info,
+    tagInfos: state.ForumReducer.tagInfos
   }
 }
 
@@ -17,6 +18,9 @@ const mapDispatchToProps = dispatch => {
     dispatch,
     onTodoClick: (event, data) => {
       dispatch(updatePosts({tag_id: data.value}));
+    },
+    tagClick: (tagInfo) => {
+      dispatch(onTagSelect(tagInfo));
     }
   }
 }
