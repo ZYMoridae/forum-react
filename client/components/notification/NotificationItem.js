@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Dropdown, Icon, Label, Menu, Image } from 'semantic-ui-react';
+import { 
+  Dropdown, 
+  Icon, 
+  Label, 
+  Menu, 
+  Image 
+} from 'semantic-ui-react';
 import './NotificationItem.css';
 
 export default class NotificationItem extends Component {

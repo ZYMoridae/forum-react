@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
-import { fetchUserInfo, fetchNotifications } from '../actions';
+import { 
+  fetchUserInfo, 
+  fetchNotifications 
+} from '../actions';
 import './GlobalHeader.css';
 import logo from './logo.svg';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
-import { Dropdown, Image, Modal, Button, Divider, Form, Checkbox, Icon, Search, Menu} from 'semantic-ui-react';
+import { 
+  Dropdown, 
+  Image, 
+  Modal, 
+  Button, 
+  Divider, 
+  Form, 
+  Checkbox, 
+  Icon, 
+  Search, 
+  Menu
+} from 'semantic-ui-react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import NotificationList from './notification/NotificationList';
 import { Link } from 'react-router-dom';
@@ -56,7 +70,7 @@ const DropdownOptions = (logOut) => {
 
   return [
     { key: 'user', value: 'user', text: 'Account', icon: 'user' },
-    { key: 'settings', value: 'settings', text: <Link to={`setting`} className="header-setting-link">Settings</Link>, icon: 'settings' },
+    { key: 'settings', value: 'settings', text: <a className="header-setting-link" onClick={redirectToSetting}>Settings</a>, icon: 'settings' },
     { key: 'sign-out', value: 'sign-out', text: <span onClick={logOut}>Sign out</span>, icon: 'sign out' }
   ]
 }
@@ -102,7 +116,7 @@ export default class GlobalHeader extends Component {
     return (
       <div className="GlobalHeader">
 
-        <Menu inverted fixed='top' size='massive' color='blue'>
+        <Menu inverted fixed='top' size='large' color='blue'>
           <Menu.Item name='home' active={true} children={<a href='/'>
               <img src="https://5df605d12ae556cf67ab-1f1de8f87db6161fed354e7e8d0d6d89.ssl.cf5.rackcdn.com/logo-abz62jo2.png" className="Logo"/>
             </a>}/>
@@ -116,6 +130,7 @@ export default class GlobalHeader extends Component {
             <Menu.Item active={false} children={<a>
                   <span>FORUM</span>
                 </a>}/>
+            <Menu.Item active={false} children={<NotificationList notificationTotalCount={notificationTotalCount} notifications={notifications}/>}/>
             <Menu.Item active={false} children={userControlComponent}/>
           </Menu.Menu>
         </Menu>

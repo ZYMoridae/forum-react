@@ -1,5 +1,8 @@
 import { connect } from 'react-redux';
-import { followPostAction, likeComment} from '../actions';
+import { 
+  followPostAction, 
+  likeComment
+} from '../actions';
 import Post from '../components/post/Post';
 
 const mapStateToProps = state => {

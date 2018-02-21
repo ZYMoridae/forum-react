@@ -1,5 +1,14 @@
 import { connect } from 'react-redux';
-import { updatePosts, inputOnChange, fbLoginCallback, loginModalOpen, loginModalClose, logOut, accountLogin, searchTermChange } from '../actions';
+import { 
+  updatePosts, 
+  inputOnChange, 
+  fbLoginCallback, 
+  loginModalOpen, 
+  loginModalClose, 
+  logOut, 
+  accountLogin, 
+  searchTermChange 
+} from '../actions';
 import GlobalHeader from '../components/GlobalHeader';
 
 const mapStateToProps = state => {

@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage';
 const forumPersistConfig = {
   key: 'ForumReducer',
   storage,
-  blacklist: ['infos', 'tagInfos']
+  blacklist: ['infos', 'tagInfos', 'isImageModalOpen', 'postImages', 'postTitle', 'postBody']
 }
 
 let initState = {
@@ -17,7 +17,12 @@ let initState = {
   tags: [],
   page_num: 1,
   selectTagId: 1,
-  tagInfos: []
+  tagInfos: [],
+  isImageModalOpen: false,
+  postImages: [],
+  postTitle: '',
+  postBody: '',
+  newPostPending: false
 }
 const forumReducer = (state = initState, action) => {
   switch (action.type) {
@@ -53,8 +58,33 @@ const forumReducer = (state = initState, action) => {
       }else {
         newTagInfos = newTagInfos.filter(tag => tag.id !== action.tagInfo.id)
       }
-      console.log(newTagInfos)
       return Object.assign({}, state, {tagInfos: newTagInfos})
+    case 'OPEN_IMAGE_MODAL':
+      return Object.assign({}, state, {isImageModalOpen: true})
+    case 'CLOSE_IMAGE_MODAL':
+      return Object.assign({}, state, {isImageModalOpen: false})
+    case 'ADD_IMAGE':
+      var newImages = state.postImages.slice();
+      if(action.image) {
+        newImages.push(action.image);
+      }
+      return Object.assign({}, state, {postImages: newImages})
+    case 'DELETE_IMAGE':
+      var newImages = state.postImages.slice();
+      if(action.image) {
+        newImages = newImages.filter(item => item === action.image.key);
+      }
+      return Object.assign({}, state, {postImages: newImages})
+    case 'POST_TITLE_CHANGED':
+      return Object.assign({}, state, {postTitle: action.title})
+    case 'POST_BODY_CHANGED':
+      return Object.assign({}, state, {postBody: action.body})
+    case 'NEW_POST_PENDING':
+      return Object.assign({}, state, {newPostPending: true})
+    case 'NEW_POST_SUCCESS':
+      return Object.assign({}, state, {newPostPending: false, tagInfos: [], postImages: [], postTitle: '', postBody: ''})
+    case 'NEW_POST_FAILURE':
+      return Object.assign({}, state, {newPostPending: false})
     default:
       return state
   }

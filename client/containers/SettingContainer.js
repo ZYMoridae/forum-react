@@ -1,5 +1,8 @@
 import { connect } from 'react-redux';
-import { followPostAction, toggleVisibility } from '../actions';
+import { 
+  followPostAction, 
+  toggleVisibility 
+} from '../actions';
 import Setting from '../components/Setting';
 
 const mapStateToProps = state => {

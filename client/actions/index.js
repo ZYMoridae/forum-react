@@ -1,29 +1,7 @@
 import Zjax from '../utils/zjax';
 import ActionTypes from './ActionTypes';
 
-let nextTodoId = 0;
 var zjax = new Zjax();
-export const addTodo = text => {
-  return {
-    type: ActionTypes.ADD_TODO,
-    id: nextTodoId++,
-    text
-  }
-}
-
-export const setVisibilityFilter = filter => {
-  return {
-    type: ActionTypes.SET_VISIBILITY_FILTER,
-    filter
-  }
-}
-
-export const toggleTodo = id => {
-  return {
-    type: ActionTypes.TOGGLE_TODO,
-    id
-  }
-}
 
 function fetchingPosts() {
   return {
@@ -71,20 +49,20 @@ export const updatePosts = (option) => {
   return function (dispatch) {
     dispatch(fetchingPosts());
     let page_num = option && option.page_num ? option.page_num : 1;
-    // if(option && option.tag_id) {
-    //   page_num = 1;
-    // }
+    let params = {
+      perPage: 20,
+      includeBody: true,
+      page: page_num,
+      order: 'last_time'
+    }
+    if (option && option.tag_id) {
+      params = Object.assign({}, params, {tag_id: option.tag_id})
+    }
     zjax.request({
       url: '/api/v1/forum/posts',
       option: {
         method: 'get',
-        params: {
-          perPage: 20,
-          includeBody: true,
-          page: page_num,
-          order: 'last_time',
-          tag_id: option && option.tag_id ? option.tag_id : 1
-        }
+        params: params
       },
       successCallback: (response) => {
         dispatch(receivePosts(option, response.data, page_num + 1));
@@ -567,7 +545,7 @@ export const likeComment = (id, isLiked) => {
       failureCallback: (err) => {
         dispatch(likeCommentFailure(err));
       }
-    })
+    });
   }
 }
 
@@ -576,6 +554,100 @@ export const onTagSelect = (tagInfo) => {
   return {
     type: ActionTypes.TAG_SELECT,
     tagInfo: tagInfo
+  }
+}
+
+// --------- Image modal -----
+
+export const openImageModal = () => {
+  return {
+    type: ActionTypes.OPEN_IMAGE_MODAL
+  }
+}
+
+
+export const closeImageModal = () => {
+  return {
+    type: ActionTypes.CLOSE_IMAGE_MODAL
+  }
+}
+
+export const addImage = (image) => {
+  return {
+    type: ActionTypes.ADD_IMAGE,
+    image: image
+  }
+}
+
+export const deleteImage = (image) => {
+  return {
+    type: ActionTypes.DELETE_IMAGE,
+    image: image
+  }
+}
+
+
+export const postTitleChanged = (title) => {
+  return {
+    type: ActionTypes.POST_TITLE_CHANGED,
+    title: title
+  }
+}
+
+export const postBodyChanged = (body) => {
+  return {
+    type: ActionTypes.POST_BODY_CHANGED,
+    body: body
+  }
+}
+
+
+// create new post
+function newPostPending() {
+  return {
+    type: ActionTypes.NEW_POST_PENDING
+  }
+}
+
+function newPostSuccess() {
+  return {
+    type: ActionTypes.NEW_POST_SUCCESS
+  }
+}
+
+function newPostFailure() {
+  return {
+    type: ActionTypes.NEW_POST_FAILURE
+  }
+}
+
+export const createPost = (postTitle, postBody, tagInfos, postImages) => {
+  return function(dispatch) {
+    let my_data = new FormData();
+    my_data.append('post[title]', postTitle);
+
+    tagInfos.forEach(tag => {
+      my_data.append('post[tag_ids][]', tag.id);
+    })
+    my_data.append('comment[content]', postBody);
+    postImages.forEach(postImage => {
+      my_data.append('comment[images][]', postImage.file);
+    });
+    dispatch(newPostPending());
+    zjax.request({
+      url: '/api/v1/forum/posts',
+      option: {
+        method: 'post',
+        responseType: 'text',
+        data: my_data
+      },
+      successCallback: (response) => {
+        dispatch(newPostSuccess());
+      },
+      failureCallback: (err) => {
+        dispatch(newPostFailure());
+      }   
+    })
   }
 }
 

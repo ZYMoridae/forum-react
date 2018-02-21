@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { fetchPostInfo, fetchPostComments } from '../../actions';
+import { 
+  fetchPostInfo, 
+  fetchPostComments 
+} from '../../actions';
 import Comment from '../../components/comment/Comment';
 import Spinner from 'react-spinkit';
 import './Post.css';
@@ -9,7 +12,15 @@ import faShare from '@fortawesome/fontawesome-free-solid/faShare';
 import faStar from '@fortawesome/fontawesome-free-solid/faStar';
 import faStarO from '@fortawesome/fontawesome-free-regular/faStar';
 import faEyeSlash from '@fortawesome/fontawesome-free-solid/faEyeSlash';
-import { Button, Dropdown, Icon, Modal, Image, Header, List} from 'semantic-ui-react';
+import { 
+  Button, 
+  Dropdown, 
+  Icon, 
+  Modal, 
+  Image, 
+  Header, 
+  List
+} from 'semantic-ui-react';
 import {
   FacebookShareButton,
   GooglePlusShareButton,
@@ -48,7 +59,7 @@ function PostDetails(props) {
   let spinnerBlock = '';
   let replyBlock = '';
   if (props.hasMoreComments && props.isFetchingPostComments) {
-    spinnerBlock = <div className="Post-spinner"><Spinner name="cube-grid"/></div>;
+    spinnerBlock = <div className="Post-spinner"><Spinner name="pacman"/></div>;
   }
   if (props.userInfo) {
     replyBlock =  <div className="Comment Comment-reply-block">

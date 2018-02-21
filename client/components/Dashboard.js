@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { updatePosts, fetchTags } from '../actions';
+import { 
+  updatePosts, 
+  fetchTags 
+} from '../actions';
 import SecondNavigator from './post/SecondNavigator';
 import PostList from './post/PostList';
 import Zjax from '../utils/zjax';
@@ -7,7 +10,7 @@ import './Dashboard.css';
 import Spinner from 'react-spinkit';
 
 function Loading(props) {
-  return props.isFetching ? <div className="Dashboard-spinner"><Spinner name="cube-grid"/></div> : ''
+  return props.isFetching ? <div className="Dashboard-spinner"><Spinner name="pacman" color="purple"/></div> : ''
 }
 
 class Dashboard extends Component {
@@ -32,10 +35,10 @@ class Dashboard extends Component {
   }
 
   render() {
-  	const {infos, onTodoClick, isFetching, selectTagId, userInfo, tags, tagInfos, tagClick} = this.props;
+  	const {infos, onClick, isFetching, selectTagId, userInfo, tags, tagInfos, tagClick} = this.props;
     return (
       <div className="Dashboard">
-        <SecondNavigator onClick={onTodoClick} selectTagId={selectTagId} userInfo={userInfo} tags={tags} tagInfos={tagInfos} tagClick={tagClick}></SecondNavigator>
+        <SecondNavigator {...this.props}></SecondNavigator>
         <PostList posts={infos.posts}></PostList>
         <Loading isFetching={isFetching}/>
       </div>

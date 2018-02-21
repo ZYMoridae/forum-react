@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import { Dropdown, Icon, Label, Menu } from 'semantic-ui-react';
+import { 
+  Dropdown, 
+  Icon, 
+  Label, 
+  Menu 
+} from 'semantic-ui-react';
 import NotificationItem from './NotificationItem';
 
 
 const NotificationPlaceholder = (props) => {
   const {notificationTotalCount, notifications} = props;
   return (
-    <div className="item" style={{position: 'relative'}}>
+    <div style={{position: 'relative'}}>
       <Icon name='mail' size="large" color="teal" />
       <Label color='purple' circular floating>{notificationTotalCount}</Label>
     </div>

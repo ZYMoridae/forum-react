@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleTodo, fetchTags } from '../../actions';
+import { 
+  fetchTags 
+} from '../../actions';
 import './SecondNavigator.css';
-import { Dropdown, Menu, Button } from 'semantic-ui-react';
+import { 
+  Dropdown, 
+  Menu, 
+  Button 
+} from 'semantic-ui-react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faEdit from '@fortawesome/fontawesome-free-solid/faEdit';
 import Spinner from 'react-spinkit';
@@ -23,9 +29,9 @@ const TagDropdown = (props) => {
 
 class SecondNavigator extends Component {
   render() {
-    const {tags, selectTagId, onClick, userInfo, tagInfos, tagClick} = this.props;
+    const {tags, selectTagId, onClick, userInfo, tagInfos, tagClick, isImageModalOpen, openImageModal, closeImageModal, postImages, addImage, deleteImage, postTitleChanged, postBodyChanged, postTitle, postBody, createPost, newPostPending} = this.props;
     return  <div className="SecondNavigator">
-              <TextEditor userInfo={userInfo} tags={tags} tagInfos={tagInfos} tagClick={tagClick}/>
+              <TextEditor userInfo={userInfo} tags={tags} tagInfos={tagInfos} tagClick={tagClick} isImageModalOpen={isImageModalOpen} openImageModal={openImageModal} closeImageModal={closeImageModal} postImages={postImages} addImage={addImage} deleteImage={deleteImage} postTitleChanged={postTitleChanged} postBodyChanged={postBodyChanged} postTitle={postTitle} postBody={postBody} createPost={createPost} newPostPending={newPostPending}/>
               <TagDropdown tags={tags} selectTagId={selectTagId} onClick={onClick}/>
             </div>
   }
