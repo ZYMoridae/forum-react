@@ -27,7 +27,7 @@ export default class TextEditor extends Component {
     };
     return (
       <div className="TextEditor">
-        <Modal closeIcon={true} closeOnDimmerClick={false} dimmer='blurring' trigger={<Button color='blue' className="start-dsicussion-btn" size="large">Start Discussion</Button>}>
+        <Modal closeIcon={true} closeOnDimmerClick={false} dimmer='blurring' trigger={<Button color='blue' className="start-dsicussion-btn" size="small" style={{fontSize: '12px', fontWeight: '400'}}>Start Discussion</Button>}>
           <Modal.Content image>
             <Image wrapped size='tiny' circular src={userInfo && userInfo.image_url ? userInfo.image_url : '/assets/images/avatar/large/rachel.png'} />
             <Modal.Description>

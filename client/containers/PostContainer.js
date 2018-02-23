@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import { 
   followPostAction, 
-  likeComment
+  likeComment,
+  markPostAsRead
 } from '../actions';
 import Post from '../components/post/Post';
 
@@ -27,6 +28,9 @@ const mapDispatchToProps = dispatch => {
     },
     commentLike: (id, isLiked) => {
       dispatch(likeComment(id, isLiked));
+    },
+    markPostAsRead: (postId) => {
+      dispatch(markPostAsRead(postId));
     }
   }
 }

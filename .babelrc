@@ -3,6 +3,14 @@
 */  
 {
   "presets":[
-      "es2017", "react", "flow"
-  ]
+    "es2017", "react", "flow"
+  ],
+  "env": {
+    "development": {
+      "plugins": ["transform-es2015-modules-commonjs"]
+    },
+    "test": {
+      "plugins": ["transform-es2015-modules-commonjs"]
+    }
+  }
 }

@@ -10,7 +10,7 @@ import rootReducer from '../reducers';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['UserReducer', 'PostReducer', 'ForumReducer', 'SettingReducer']
+  blacklist: ['UserReducer', 'PostReducer', 'ForumReducer', 'SettingReducer', 'WebappDashboardReducer']
 }
 
 const loggerMiddleware = createLogger();

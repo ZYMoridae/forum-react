@@ -11,9 +11,9 @@ import NotificationItem from './NotificationItem';
 const NotificationPlaceholder = (props) => {
   const {notificationTotalCount, notifications} = props;
   return (
-    <div style={{position: 'relative'}}>
-      <Icon name='mail' size="large" color="teal" />
-      <Label color='purple' circular floating>{notificationTotalCount}</Label>
+    <div style={{position: 'relative', marginBottom: '10px'}}>
+      <Icon name='mail' size="large" style={{color: 'white'}} />
+      <Label color='red' circular floating>{notificationTotalCount}</Label>
     </div>
   )
 }

@@ -10,7 +10,7 @@ import './Dashboard.css';
 import Spinner from 'react-spinkit';
 
 function Loading(props) {
-  return props.isFetching ? <div className="Dashboard-spinner"><Spinner name="pacman" color="purple"/></div> : ''
+  return props.isFetching ? <div className="Dashboard-spinner"><Spinner name="pacman" color="black"/></div> : ''
 }
 
 class Dashboard extends Component {

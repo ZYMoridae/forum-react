@@ -7,6 +7,7 @@ import MyDashboard from '../containers/MyDashboard';
 import GlobalHeaderContainer from '../containers/GlobalHeaderContainer';
 import PostContainer from '../containers/PostContainer';
 import SettingContainer from '../containers/SettingContainer';
+import WebappDashboardContainer from '../containers/webapp/WebappDashboardContainer';
 // import axios from 'axios';
 import Zjax from '../utils/zjax';
 
@@ -37,8 +38,7 @@ const BasicExample = () => (
     <div>
       <GlobalHeaderContainer />
       <Route exact path="/" component={Home}/>
-{/*      <Route path="/about" component={About}/>*/}
-      {/*<Route path="/topics" component={Topics}/>*/}
+      <Route path="/webapp" component={WebappDashboardPage}/>
       <Route path="/setting" component={SettingPage}/>
       <Route path="/post/:id" component={Post}/>
     </div>
@@ -51,6 +51,13 @@ const SettingPage = () => (
     <SettingContainer />
   </div>
 ) 
+
+
+const WebappDashboardPage = () => (
+  <div className="Container">
+    <WebappDashboardContainer />
+  </div>
+)
 
 
 const Post = ({ match }) => (
@@ -66,39 +73,6 @@ const Home = () => (
   </div>
 )
 
-// const About = () => (
-//   <div>
-//     <h2>About</h2>
-//   </div>
-// )
-
-// const Topics = ({ match }) => (
-//   <div>
-//     <h2>Topics</h2>
-//     <ul>
-//       <li>
-//         <Link to={`${match.url}/rendering`}>
-//           Rendering with React
-//         </Link>
-//       </li>
-//       <li>
-//         <Link to={`${match.url}/components`}>
-//           Components
-//         </Link>
-//       </li>
-//       <li>
-//         <Link to={`${match.url}/props-v-state`}>
-//           Props v. State
-//         </Link>
-//       </li>
-//     </ul>
-
-//     <Route path={`${match.url}/:topicId`} component={Topic}/>
-//     <Route exact path={match.url} render={() => (
-//       <h3>Please select a topic.</h3>
-//     )}/>
-//   </div>
-// )
 
 const Topic = ({ match }) => (
   <div>

@@ -21,7 +21,7 @@ const TagDropdown = (props) => {
     const selectTagInfo = tags.filter(tag => {return tag.id === selectTagId});
     dropdownComponent = <Dropdown text={selectTagInfo.length > 0 ? selectTagInfo[0].name : ''} onChange={(event, data)=>onClick(event, data)} options={ tags.map(tag => {return { key: tag.id, text: tag.name, value: tag.id }}) } simple item/>    
   }
-  return  <Menu compact>
+  return  <Menu compact size="tiny">
             {dropdownComponent}
           </Menu>
 }
@@ -33,8 +33,15 @@ class SecondNavigator extends Component {
     return  <div className="SecondNavigator">
               <TextEditor userInfo={userInfo} tags={tags} tagInfos={tagInfos} tagClick={tagClick} isImageModalOpen={isImageModalOpen} openImageModal={openImageModal} closeImageModal={closeImageModal} postImages={postImages} addImage={addImage} deleteImage={deleteImage} postTitleChanged={postTitleChanged} postBodyChanged={postBodyChanged} postTitle={postTitle} postBody={postBody} createPost={createPost} newPostPending={newPostPending}/>
               <TagDropdown tags={tags} selectTagId={selectTagId} onClick={onClick}/>
+              <div className="fb-messenger-checkbox" 
+                   origin='119.18.42.150'
+                   messenger_app_id="646106995537624" 
+                   page_id="763671557066427"
+                   allow_login='true'
+                   size="large">
+              </div>
             </div>
-  }
+  } 
 }
 
 const mapStateToProps = state => {

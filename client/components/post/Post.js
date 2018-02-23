@@ -72,7 +72,7 @@ function PostDetails(props) {
   return  <div>
             <PostActions post={props.post} isFollowPost={props.isFollowPost} onFollowClick={props.onFollowClick}/>
             <div className="Post-info-container">
-              <h3 className="Post-title">{postInfo.title}</h3>
+              <h2 className="Post-title">{postInfo.title}</h2>
               <h5 className="Post-tags">
                 {postInfo.tags.map((tag, index) => <span className="Post-tag" key={tag.id}>{tag.name}{index === postInfo.tags.length - 1 ? '' : ','}</span>)}
               </h5>
@@ -88,7 +88,7 @@ function PostDetails(props) {
 
 function ShareModalBox(props) {
   let shareUrl = window.location.hostname;
-  return <Modal size='tiny' trigger={<Button color='pink' className="Post-action-item-btn"><FontAwesomeIcon className="PostList-comment-icon" icon={faShareAlt} size="1x"/>
+  return <Modal size='tiny' trigger={<Button color='blue' className="Post-action-item-btn"><FontAwesomeIcon className="PostList-comment-icon" icon={faShareAlt} size="1x"/>
                 Share</Button>}>
           <Modal.Header>Share</Modal.Header>
           <Modal.Content image>
@@ -123,7 +123,7 @@ function PostActions(props) {
               <ShareModalBox />
             </div>
             <div className="Post-action-item">
-              <Button color='purple' className="Post-action-item-btn">
+              <Button color='black' className="Post-action-item-btn">
                 <FontAwesomeIcon className="PostList-comment-icon" icon={faShare} size="1x"/>
                 Reply
               </Button>
@@ -159,7 +159,7 @@ const FollowDropdown = (props) => (
 export default class Post extends Component {
   componentDidMount() {
     const meta_id = this.props.postId.split('-')[0];
-    const {hasMoreComments, lastCommentId} = this.props;
+    const {hasMoreComments, lastCommentId, markPostAsRead} = this.props;
     this.props.dispatch(fetchPostInfo({
       id: meta_id
     }));
@@ -167,6 +167,7 @@ export default class Post extends Component {
       id: meta_id, 
       hasMoreComments: hasMoreComments
     }));
+    markPostAsRead(meta_id);
     window.addEventListener('scroll', this.loadMoreComments.bind(this));
   }
   loadMoreComments() {
@@ -187,7 +188,7 @@ export default class Post extends Component {
     const { isFetchingPost, info, isFetchingPostComments, hasMoreComments, postComments, userInfo, isFollowPost, onFollowClick, commentLike} = this.props;
     return (
       <div className="Post">
-        { info ? <PostDetails onFollowClick={onFollowClick} post={info} comments={postComments} isFollowPost={isFollowPost} userInfo={userInfo} isFetchingPostComments={isFetchingPostComments} hasMoreComments={hasMoreComments} commentLike={commentLike}/> : <div className="Post-spinner"><Spinner name="cube-grid"/></div> }
+        { info ? <PostDetails onFollowClick={onFollowClick} post={info} comments={postComments} isFollowPost={isFollowPost} userInfo={userInfo} isFetchingPostComments={isFetchingPostComments} hasMoreComments={hasMoreComments} commentLike={commentLike}/> : <div className="Post-spinner"><Spinner name="pacman"/></div> }
       </div>
     )
   }

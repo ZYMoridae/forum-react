@@ -8,6 +8,7 @@ import {
   Comment, 
   Icon 
 } from 'semantic-ui-react'
+import TimeAgo from 'react-timeago';
 
 function PostItem(props) {
   let post = props.post;
@@ -20,7 +21,7 @@ function PostItem(props) {
                 </li>
                 <li className="PostList-title">
                   <span className="PostList-title-link">
-                    <div style={{color: '#2185d0'}}>
+                    <div style={{color: '#2185d0', display: 'inline'}}>
                       [{post.id}] - 
                       {post.is_sticky ? <Icon name='pin'/> : ''}
                       {post.is_locked ? <Icon name='lock'/> : ''}
@@ -28,7 +29,7 @@ function PostItem(props) {
                       {post.is_reported ? <Icon name='warning circle'/> : ''}
                       {post.title}
                     </div>
-                    <div style={{color: '#2185d0'}}>
+                    <div style={{color: '#dddddd', display: 'inline', fontSize: '12px', marginLeft: '5px'}}>
                       {post.tags.map(tag => tag.name).join(', ')}
                     </div>
                   </span>
@@ -37,8 +38,11 @@ function PostItem(props) {
                       {post.unread_count > 0 ? <FontAwesomeIcon className="PostList-comment-icon" icon={faComment} size="1x"/> : <FontAwesomeIcon className="PostList-comment-icon" icon={faCommentO} size="1x"/>}
                       {post.comments_count}
                     </div>
-                    <div>
+                    <div style={{textAlign: 'right', fontSize: '12px', color: '#dddddd'}}>
                       Last commented by {post.last_comment_by}
+                    </div>
+                    <div style={{textAlign: 'right', fontSize: '12px', color: '#dddddd'}}>
+                      <TimeAgo date={post.last_comment_at * 1000} />
                     </div>
                   </span>
                 </li>

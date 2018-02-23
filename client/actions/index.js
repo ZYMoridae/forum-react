@@ -651,3 +651,114 @@ export const createPost = (postTitle, postBody, tagInfos, postImages) => {
   }
 }
 
+function markPostReadSuccess() {
+  return {
+    type: 'MARK_POST_READ_SUCCESS'
+  }
+}
+
+function markPostReadFailure() {
+  return {
+    type: 'MARK_POST_READ_FAILURE'
+  }
+}
+
+
+export const markPostAsRead = (postId) => {
+  return function(dispatch) {
+    zjax.request({
+      url: `/api/v1/forum/posts/${postId}/read`,
+      option: {
+        method: 'post'
+      },
+      successCallback: (response) => {
+        dispatch(markPostReadSuccess(postId));
+      },
+      failureCallback: (err) => {
+        dispatch(markPostReadFailure(err));
+      }
+    })
+  }
+}
+
+// --------- workouts
+
+function fetchingTodayWorkouts() {
+  return {
+    type: 'TODAY_WORKOUTS_PENDING'
+  }
+}
+
+function fetchTodayWorkoutsSuccess(json) {
+  return {
+    type: 'TODAY_WORKOUTS_SUCCESS',
+    todayWorkouts: json
+  }
+}
+
+function fetchTodayWorkoutFailure(err) {
+  return {
+    type: 'TODAY_WORKOUTS_FAILURE',
+    err: err
+  }
+}
+
+
+export const getTodayWorkouts = () => {
+  return function(dispatch) {
+    dispatch(fetchingTodayWorkouts());
+    zjax.request({
+      url: '/api/v8/workouts/today',
+      option: {
+        method: 'get'
+      },
+      successCallback: (response) => {
+        dispatch(fetchTodayWorkoutsSuccess(response.data));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchTodayWorkoutFailure(err));
+      }
+    })
+  }
+}
+
+
+// -------- foods
+
+function fetchingFoods() {
+  return {
+    type: 'FOODS_PENDING'
+  }
+}
+
+function fetchFoodsSuccess(json) {
+  return {
+    type: 'FETCH_FOODS_SUCCESS',
+    foods: json
+  }
+}
+
+function fetchFoodsFailure(err) {
+  return {
+    type: 'FETCH_FOODS_FAILURE',
+    err: err
+  }
+}
+
+export const getFoods = () => {
+  return function (dispatch) {
+    dispatch(fetchingFoods());
+    zjax.request({
+      url: '/api/v8/foods',
+      option: {
+        method: 'get'
+      },
+      successCallback: (response) => {
+        dispatch(fetchFoodsSuccess(response.data));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchFoodsFailure(err));
+      }
+    })
+  }
+}

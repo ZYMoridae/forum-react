@@ -67,8 +67,17 @@ const postReducer = (state = initState, action) => {
         if(item.id === action.id) {
           item.liked_by_user = !action.isLiked;
         }
+        item.replied_comments.forEach(nested_item => {
+          if(nested_item.id === action.id) {
+            nested_item.liked_by_user = !action.isLiked;
+          }
+        });
       });
-      return Object.assign({}, state, {postComments: newComments})  
+      return Object.assign({}, state, {postComments: newComments})
+    case 'MARK_POST_READ_SUCCESS':
+      return state
+    case 'MARK_POST_READ_FAILURE':
+      return state
     default:
       return state
   }

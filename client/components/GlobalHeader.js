@@ -121,6 +121,9 @@ export default class GlobalHeader extends Component {
               <img src="https://5df605d12ae556cf67ab-1f1de8f87db6161fed354e7e8d0d6d89.ssl.cf5.rackcdn.com/logo-abz62jo2.png" className="Logo"/>
             </a>}/>
           <Menu.Menu position='right'>
+           <Menu.Item active={false} children={<a href="/#/webapp">
+                  <span>WEBAPP</span>
+                </a>}/>
             <Menu.Item active={false} children={<a href="https://www.sweat.com/collections/gear" target='_blank'>
                   <span>SHOP</span>
                 </a>}/>

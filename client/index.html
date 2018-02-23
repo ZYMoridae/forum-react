@@ -4,8 +4,28 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy">
     <title>React App Setup</title>
+    <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
+    <script>      
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '646106995537624',
+          autoLogAppEvents : true,
+          xfbml      : true,
+          version    : 'v2.12'
+        });
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));   
+    </script>
   </head>
-  <body>
+  <body>   
     <div id="root">
 
     </div>

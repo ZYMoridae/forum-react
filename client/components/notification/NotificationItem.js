@@ -12,13 +12,27 @@ export default class NotificationItem extends Component {
 
   render() {
     const {notification} = this.props;
-    const redirectToSetting = () => {
+    const redirectToPost = () => {
       window.location.assign(`/#/post/${notification.subject_id}`); 
       window.location.reload();
     }
     return (
       <div className="NotificationItem">
-        <Dropdown.Item className="NotificationItem-block" description={notification.content_type} content={notification.subject.title} image={<Image src={notification.sender.image} circular size='mini' onClick={redirectToSetting}/>} />
+        <Dropdown.Item className="NotificationItem-block" children={
+          <a onClick={redirectToPost}>
+            <ul style={{listStyle: 'no-bullet', display: 'inline-flex', paddingLeft: '0px'}}>
+              <li>
+                <Image src={notification.sender.image} circular size='mini'/>
+              </li>
+              <li style={{marginLeft: '10px'}}>
+                <span>
+                  <div>{notification.content_type}</div>
+                  <div>{notification.subject.title}</div>
+                </span>
+              </li>
+            </ul>
+          </a>
+        } />
       </div>
     )
   }
