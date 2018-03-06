@@ -8,6 +8,7 @@ import GlobalHeaderContainer from '../containers/GlobalHeaderContainer';
 import PostContainer from '../containers/PostContainer';
 import SettingContainer from '../containers/SettingContainer';
 import WebappDashboardContainer from '../containers/webapp/WebappDashboardContainer';
+import FoodContainer from '../containers/webapp/FoodContainer';
 // import axios from 'axios';
 import Zjax from '../utils/zjax';
 
@@ -38,7 +39,8 @@ const BasicExample = () => (
     <div>
       <GlobalHeaderContainer />
       <Route exact path="/" component={Home}/>
-      <Route path="/webapp" component={WebappDashboardPage}/>
+      <Route exact path="/webapp" component={WebappDashboardPage}/>
+      <Route path="/webapp/food/:id" component={FoodPage}/>
       <Route path="/setting" component={SettingPage}/>
       <Route path="/post/:id" component={Post}/>
     </div>
@@ -59,6 +61,12 @@ const WebappDashboardPage = () => (
   </div>
 )
 
+
+const FoodPage = ({ match }) => (
+  <div className="Container">
+    <FoodContainer foodId={match.params.id}/>
+  </div>
+)
 
 const Post = ({ match }) => (
   <div className="Container">

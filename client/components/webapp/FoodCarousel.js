@@ -21,8 +21,8 @@ export default class FoodCarousel extends Component {
           {mealPlans.map(dailyPlan => 
             <div key={dailyPlan.id} style={{textAlign: 'center'}}>
               <List horizontal>
-                <List.Item>
-                  <a>
+                <List.Item style={{textAlign: '-webkit-center'}}>
+                  <a href={'/#/webapp/food/'+dailyPlan.breakfast_id}>
                     <ul style={{listStyle: 'none'}}>
                       <li>
                         <Image className='foodItem' size='small' circular src={dailyPlan.breakfast_image} />
@@ -33,7 +33,7 @@ export default class FoodCarousel extends Component {
                     </ul>
                   </a>
                 </List.Item>
-                <List.Item>
+                <List.Item style={{textAlign: '-webkit-center'}}>
                   <a>
                     <ul style={{listStyle: 'none'}}>
                       <li>
@@ -45,7 +45,7 @@ export default class FoodCarousel extends Component {
                     </ul>
                   </a>
                 </List.Item>
-                <List.Item>
+                <List.Item style={{textAlign: '-webkit-center'}}>
                   <a>
                     <ul style={{listStyle: 'none'}}>
                       <li>
@@ -57,7 +57,7 @@ export default class FoodCarousel extends Component {
                     </ul>
                   </a>
                 </List.Item>
-                <List.Item>
+                <List.Item style={{textAlign: '-webkit-center'}}>
                   <a>
                     <ul style={{listStyle: 'none'}}>
                       <li>
@@ -69,7 +69,7 @@ export default class FoodCarousel extends Component {
                     </ul>
                   </a>
                 </List.Item>
-                <List.Item>
+                <List.Item style={{textAlign: '-webkit-center'}}>
                   <a>
                     <ul style={{listStyle: 'none'}}>
                       <li>

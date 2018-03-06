@@ -762,3 +762,43 @@ export const getFoods = () => {
     })
   }
 }
+
+
+
+function fetchingFoodInfo() {
+  return {
+    type: 'FOOD_INFO_PENDING'
+  }
+}
+
+function fetchFoodInfoSuccess(json) {
+  return {
+    type: 'FETCH_FOOD_INFO_SUCCESS',
+    foodInfo: json
+  }
+}
+
+function fetchFoodInfoFailure() {
+  return {
+    type: 'FETCH_FOOD_INFO_FAILURE',
+    err: err
+  }
+}
+
+export const getFoodInfo = (foodId) => {
+  return function (dispatch) {
+    dispatch(fetchingFoodInfo());
+    zjax.request({
+      url: `/api/v8/foods/${foodId}`,
+      option: {
+        method: 'get'
+      },
+      successCallback: (response) => {
+        dispatch(fetchFoodInfoSuccess(response.data));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchFoodInfoFailure(err));
+      }
+    })
+  }
+}

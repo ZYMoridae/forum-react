@@ -130,7 +130,7 @@ export default class GlobalHeader extends Component {
             <Menu.Item active={false} children={<a href="https://www.sweat.com/blogs/news" target='_blank'>
                   <span>BLOG</span>
                 </a>}/>
-            <Menu.Item active={false} children={<a>
+            <Menu.Item active={false} children={<a href="/#/">
                   <span>FORUM</span>
                 </a>}/>
             <Menu.Item active={false} children={<NotificationList notificationTotalCount={notificationTotalCount} notifications={notifications}/>}/>
