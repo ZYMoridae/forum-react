@@ -34,7 +34,7 @@ export default class FoodCarousel extends Component {
                   </a>
                 </List.Item>
                 <List.Item style={{textAlign: '-webkit-center'}}>
-                  <a>
+                  <a href={'/#/webapp/food/'+dailyPlan.morning_snack_id}>
                     <ul style={{listStyle: 'none'}}>
                       <li>
                         <Image className='foodItem' size='small' circular src={dailyPlan.morning_snack_image} />
@@ -46,7 +46,7 @@ export default class FoodCarousel extends Component {
                   </a>
                 </List.Item>
                 <List.Item style={{textAlign: '-webkit-center'}}>
-                  <a>
+                  <a href={'/#/webapp/food/'+dailyPlan.lunch_id}>
                     <ul style={{listStyle: 'none'}}>
                       <li>
                         <Image className='foodItem' size='small' circular src={dailyPlan.lunch_image} />
@@ -58,7 +58,7 @@ export default class FoodCarousel extends Component {
                   </a>
                 </List.Item>
                 <List.Item style={{textAlign: '-webkit-center'}}>
-                  <a>
+                  <a href={'/#/webapp/food/'+dailyPlan.afternoon_snack_id}>
                     <ul style={{listStyle: 'none'}}>
                       <li>
                         <Image className='foodItem' size='small' circular src={dailyPlan.afternoon_snack_image} />
@@ -70,7 +70,7 @@ export default class FoodCarousel extends Component {
                   </a>
                 </List.Item>
                 <List.Item style={{textAlign: '-webkit-center'}}>
-                  <a>
+                  <a href={'/#/webapp/food/'+dailyPlan.dinner_id}>
                     <ul style={{listStyle: 'none'}}>
                       <li>
                         <Image className='foodItem' size='small' circular src={dailyPlan.dinner_image} />

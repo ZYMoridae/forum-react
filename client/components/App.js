@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Dashboard from './Dashboard';
 import GlobalHeader from './GlobalHeader';
+import GlobalFooter from './GlobalFooter';
 import MyDashboard from '../containers/MyDashboard';
 import GlobalHeaderContainer from '../containers/GlobalHeaderContainer';
 import PostContainer from '../containers/PostContainer';
@@ -43,6 +44,7 @@ const BasicExample = () => (
       <Route path="/webapp/food/:id" component={FoodPage}/>
       <Route path="/setting" component={SettingPage}/>
       <Route path="/post/:id" component={Post}/>
+      <GlobalFooter />
     </div>
   </Router>
 )
