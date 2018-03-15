@@ -10,8 +10,10 @@ import PostContainer from '../containers/PostContainer';
 import SettingContainer from '../containers/SettingContainer';
 import WebappDashboardContainer from '../containers/webapp/WebappDashboardContainer';
 import FoodContainer from '../containers/webapp/FoodContainer';
+import WorkoutOverviewContainer from '../containers/webapp/WorkoutOverviewContainer';
 // import axios from 'axios';
 import Zjax from '../utils/zjax';
+import "../../node_modules/video-react/dist/video-react.css";
 
 import {
   HashRouter as Router,
@@ -42,11 +44,19 @@ const BasicExample = () => (
       <Route exact path="/" component={Home}/>
       <Route exact path="/webapp" component={WebappDashboardPage}/>
       <Route path="/webapp/food/:id" component={FoodPage}/>
+      <Route path="/webapp/workout/overview/:id" component={WorkoutOverviewPage}/>
       <Route path="/setting" component={SettingPage}/>
       <Route path="/post/:id" component={Post}/>
       <GlobalFooter />
     </div>
   </Router>
+)
+
+
+const WorkoutOverviewPage = ({ match }) => (
+  <div className="Container">
+    <WorkoutOverviewContainer workoutId={match.params.id}/>
+  </div>
 )
 
 

@@ -5,14 +5,16 @@ import storage from 'redux-persist/lib/storage';
 const authPersistConfig = {
   key: 'WebappDashboardReducer',
   storage,
-  blacklist: ['isFetchingTodayWorouts', 'todayWorkouts', 'err', 'isFetchingMealPlans', 'mealPlans']
+  blacklist: ['isFetchingTodayWorouts', 'todayWorkouts', 'err', 'isFetchingMealPlans', 'mealPlans', 'isShowSubCategory', 'subCategory']
 }
 
 let initState = {
+  isShowSubCategory: false,
   isFetchingTodayWorouts: false,
   isFetchingMealPlans: false,
   todayWorkouts: null,
   mealPlans: null,
+  subCategory: [],
   err: null
 }
 const webappDasboardReducer = (state = initState, action) => {
@@ -29,6 +31,15 @@ const webappDasboardReducer = (state = initState, action) => {
       return Object.assign({}, state, {isFetchingMealPlans: false, mealPlans: action.foods})
     case 'FETCH_FOODS_FAILURE':
       return Object.assign({}, state, {isFetchingMealPlans: false, err: action.err})
+    case 'WORKOUT_CATEGORY_CLICK':
+      let subCategoryContents = [];
+      if(state.todayWorkouts) {
+        let cat = state.todayWorkouts.categories.find(category => category.id === action.categoryId);
+        cat.sub_categories.forEach(sub_category => {
+          subCategoryContents = [].concat(subCategoryContents, sub_category.workout_contents);
+        });
+      }
+      return Object.assign({}, state, {isShowSubCategory: !state.isShowSubCategory, subCategory: subCategoryContents})
     default:
       return state
   }

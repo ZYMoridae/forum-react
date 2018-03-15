@@ -8,12 +8,15 @@ import {
   deleteImage, 
   postTitleChanged, 
   postBodyChanged, 
-  createPost
+  createPost,
+  workoutCategoryClick
 } from '../../actions';
 import WebappDashboard from '../../components/webapp/WebappDashboard';
 
 const mapStateToProps = state => {
   return {
+    subCategory: state.WebappDashboardReducer.subCategory,
+    isShowSubCategory: state.WebappDashboardReducer.isShowSubCategory,
     isFetchingTodayWorouts: state.WebappDashboardReducer.isFetchingTodayWorouts,
     todayWorkouts: state.WebappDashboardReducer.todayWorkouts,
     isFetchingMealPlans: state.WebappDashboardReducer.isFetchingMealPlans,
@@ -23,7 +26,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatch
+    dispatch,
+    workoutCategoryClick: (categoryId) => {
+      dispatch(workoutCategoryClick(categoryId));
+    }
   }
 }
 

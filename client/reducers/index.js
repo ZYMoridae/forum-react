@@ -5,6 +5,7 @@ import PostReducer from './PostReducer';
 import SettingReducer from './SettingReducer';
 import WebappDashboardReducer from './webapp/WebappDashboardReducer';
 import FoodReducer from './webapp/FoodReducer';
+import WorkoutOverviewReducer from './webapp/WorkoutOverviewReducer';
 
 const appReducer = combineReducers({
   ForumReducer,
@@ -12,7 +13,8 @@ const appReducer = combineReducers({
   PostReducer,
   SettingReducer,
   WebappDashboardReducer,
-  FoodReducer
+  FoodReducer,
+  WorkoutOverviewReducer
 });
 
 export default appReducer;

@@ -12,10 +12,10 @@ export default class WebappDashboard extends Component {
     this.props.dispatch(getFoods());
   }
   render() {
-    const { todayWorkouts, mealPlans, isFetchingTodayWorouts, isFetchingMealPlans} = this.props;
+    const { todayWorkouts, mealPlans, isFetchingTodayWorouts, isFetchingMealPlans, isShowSubCategory, workoutCategoryClick, subCategory} = this.props;
     return (
       <div className="webappdashboard">
-        <DashboardCarousel todayWorkouts={todayWorkouts} isFetchingTodayWorouts={isFetchingTodayWorouts}/>
+        <DashboardCarousel subCategory={subCategory} todayWorkouts={todayWorkouts} isFetchingTodayWorouts={isFetchingTodayWorouts} isShowSubCategory={isShowSubCategory} workoutCategoryClick={workoutCategoryClick}/>
         <FoodCarousel mealPlans={mealPlans} isFetchingMealPlans={isFetchingMealPlans}/>
       </div>
     )

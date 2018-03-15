@@ -802,3 +802,56 @@ export const getFoodInfo = (foodId) => {
     })
   }
 }
+
+
+/*
+dashboard
+ */
+
+export const workoutCategoryClick = (categoryId) => {
+  return {
+    type: 'WORKOUT_CATEGORY_CLICK',
+    categoryId: categoryId
+  }
+}
+
+/*
+workouts overview
+ */
+function fetchingWorkoutContents() {
+  return {
+    type: 'WORKOUT_CONTENTS_PENDING'
+  }
+}
+
+function fetchWorkoutContentsSuccess(json) {
+  return {
+    type: 'FETCH_WORKOUT_CONTENTS_SUCCESS',
+    workoutContents: json
+  }
+}
+
+function fetchWorkoutContentsFailure() {
+  return {
+    type: 'FETCH_WORKOUT_CONTENTS_FAILURE',
+    err: err
+  }
+}
+
+export const getWorkoutContents = (workoutContentId) => {
+  return function (dispatch) {
+    dispatch(fetchingWorkoutContents());
+    zjax.request({
+      url: `/api/v9/workout-contents/${workoutContentId}`,
+      option: {
+        method: 'get'
+      },
+      successCallback: (response) => {
+        dispatch(fetchWorkoutContentsSuccess(response.data));
+      },
+      failureCallback: (err) => {
+        dispatch(fetchWorkoutContentsFailure(err));
+      }
+    })
+  }
+}
