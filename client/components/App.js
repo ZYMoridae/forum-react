@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './App.sass';
 import Dashboard from './Dashboard';
 import GlobalHeader from './GlobalHeader';
 import GlobalFooter from './GlobalFooter';

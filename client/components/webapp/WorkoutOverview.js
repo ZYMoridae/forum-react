@@ -5,6 +5,7 @@ import {
   Button
 } from 'semantic-ui-react';
 import { Player } from 'video-react';
+import './WorkoutOverview.sass';
 
 export default class WorkoutOverview extends Component {
   componentDidMount() {
@@ -12,18 +13,19 @@ export default class WorkoutOverview extends Component {
   }
   render() {
     const { workoutContents, isFetchingWorkoutContents, err } = this.props;
+    console.log(workoutContents)
     return (
-      <div className="workoutoverview">
+      <div className="WorkoutOverview">
         {workoutContents && 
           <div>
             {workoutContents.circuits.map((circuit, index) => 
               <div key={circuit.id}>
-                <Header as='h3' textAlign='center' style={{backgroundColor: '#fd5699', paddingTop: '20px', paddingBottom: '20px', color: 'white'}}>
-                  {index+1}. {circuit.circuit_type.name}
+                <Header className="workout-header" as='h3' textAlign='center'>
+                  {index+1}. {circuit.circuit_type && circuit.circuit_type.name ? circuit.circuit_type.name : workoutContents.category_name}
                 </Header>
                 <Container textAlign='center'>
-                  {circuit.sub_circuits.map((sub_circuit, index1) => 
-                    sub_circuit.exercises.map((exercise, index2) => 
+                  {
+                    circuit.exercises.map((exercise, index2) => 
                       <div key={exercise.id}>
                         <div>{index2+1}. {exercise.name}</div>
                         <video src={exercise.video} width="320" height="240" autoplay="true" loop preload="auto">
@@ -31,12 +33,11 @@ export default class WorkoutOverview extends Component {
                         </video>
                       </div>
                     )
-                  )}
+                  }
                 </Container>
-                
               </div>
             )}
-            <Button color="twitter" fluid style={{paddingTop: '30px', paddingBottom: '30px'}}>Start Workout</Button>
+            <Button color="twitter" fluid className="start-btn">Start Workout</Button>
           </div>
         }
       </div>

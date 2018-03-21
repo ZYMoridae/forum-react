@@ -7,7 +7,7 @@ import {
   Input, 
   List 
 } from 'semantic-ui-react';
-import './TextEditor.css';
+import './TextEditor.sass';
 import ReactQuill from 'react-quill';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faImage from '@fortawesome/fontawesome-free-solid/faImage';

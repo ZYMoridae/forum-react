@@ -6,13 +6,13 @@ import {
   Menu 
 } from 'semantic-ui-react';
 import NotificationItem from './NotificationItem';
-
+import './NotificationList.sass';
 
 const NotificationPlaceholder = (props) => {
   const {notificationTotalCount, notifications} = props;
   return (
-    <div style={{position: 'relative', marginBottom: '10px'}}>
-      <Icon name='mail' size="large" style={{color: 'white'}} />
+    <div className="notification-placeholder">
+      <Icon name='mail' className="icon" size="large"/>
       <Label color='red' circular floating>{notificationTotalCount}</Label>
     </div>
   )
@@ -22,7 +22,7 @@ export default class NotificationList extends Component {
   render() {
     const {notificationTotalCount, notifications} = this.props;
     return (
-      <div className="notificationlist">
+      <div className="NotificationList">
         <Dropdown icon={<NotificationPlaceholder notificationTotalCount={notificationTotalCount}/>}>
           <Dropdown.Menu>
             {notifications.map(notification => <NotificationItem key={notification.id} notification={notification}/>)}

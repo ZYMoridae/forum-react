@@ -3,7 +3,7 @@ import {
   fetchUserInfo, 
   fetchNotifications 
 } from '../actions';
-import './GlobalHeader.css';
+import './GlobalHeader.sass';
 import logo from './logo.svg';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
@@ -137,43 +137,6 @@ export default class GlobalHeader extends Component {
             <Menu.Item active={false} children={userControlComponent}/>
           </Menu.Menu>
         </Menu>
-
-
-{/*        <div className="GlobalHeader-container">
-          <h1 className="Header-title">
-            <a href='/'>
-              <img src="https://5df605d12ae556cf67ab-1f1de8f87db6161fed354e7e8d0d6d89.ssl.cf5.rackcdn.com/logo-abz62jo2.png" className="Logo"/>
-            </a>
-          </h1>
-          <div className="GlobalHeader-secondary">
-            <ul className="GlobalHeader-header-controls">
-              <li className="GlobalHeader-item-button GlobalHeader-item ">
-                <NotificationList notificationTotalCount={notificationTotalCount} notifications={notifications}/>
-              </li>
-              <li className="GlobalHeader-item-session GlobalHeader-item">
-                <SearchBar {...this.props}/>
-              </li>
-              <li className="GlobalHeader-item-button GlobalHeader-item">
-                <a href="https://www.sweat.com/collections/gear" target='_blank'>
-                  <span>SHOP</span>
-                </a>
-              </li>
-              <li className="GlobalHeader-item-button GlobalHeader-item">
-                <a href="https://www.sweat.com/blogs/news" target='_blank'>
-                  <span>BLOG</span>
-                </a>
-              </li>
-              <li className="GlobalHeader-item-button GlobalHeader-item GlobalHeader-item-forum">
-                <a>
-                  <span>FORUM</span>
-                </a>
-              </li>
-              <li className="GlobalHeader-item-session GlobalHeader-item User-control">
-                {userControlComponent}
-              </li>
-            </ul>
-          </div>
-        </div>*/}
       </div>
     )
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
-import './Comment.css';
+import './Comment.sass';
 import { Comment, Icon, Button } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
 
@@ -32,14 +32,13 @@ function CmtContent(props) {
       <Comment.Text>
         { comment.type === 'comment' ? renderHTML(comment.html_body) : <EventComment comment={comment}/>}
       </Comment.Text>
-      {comment.type === 'comment' ? 
+      {comment.type === 'comment' &&
         <Comment.Actions>
           <Comment.Action children={<Button color='youtube' circular={true} onClick={() => {onClickHandler(comment.id, comment.liked_by_user)}}><Icon name='like'/> {comment.liked_by_user ? 'Like' : 'Unlike'}</Button>}>
           </Comment.Action>
           <Comment.Action children={<Button color='linkedin' circular={true} onClick={onClickHandler}><Icon name='reply'/> Reply</Button>}>
           </Comment.Action>
         </Comment.Actions> 
-        : ''
       }  
     </Comment.Content>
   )

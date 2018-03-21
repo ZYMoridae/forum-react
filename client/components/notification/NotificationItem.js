@@ -6,7 +6,7 @@ import {
   Menu, 
   Image 
 } from 'semantic-ui-react';
-import './NotificationItem.css';
+import './NotificationItem.sass';
 
 export default class NotificationItem extends Component {
 
@@ -20,11 +20,11 @@ export default class NotificationItem extends Component {
       <div className="NotificationItem">
         <Dropdown.Item className="NotificationItem-block" children={
           <a onClick={redirectToPost}>
-            <ul style={{listStyle: 'no-bullet', display: 'inline-flex', paddingLeft: '0px'}}>
+            <ul>
               <li>
                 <Image src={notification.sender.image} circular size='mini'/>
               </li>
-              <li style={{marginLeft: '10px'}}>
+              <li className="NotificationItem-meta">
                 <span>
                   <div>{notification.content_type}</div>
                   <div>{notification.subject.title}</div>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { 
   fetchTags 
 } from '../../actions';
-import './SecondNavigator.css';
+import './SecondNavigator.sass';
 import { 
   Dropdown, 
   Menu, 

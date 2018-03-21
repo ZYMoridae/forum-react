@@ -7,6 +7,7 @@ import {
   Divider,
   Container
 } from 'semantic-ui-react';
+import './FoodInfo.sass';
 
 const AlternativesBlock = (props) => {
   const {alternatives} = props;
@@ -23,12 +24,12 @@ const FoodInfoBlock = (props) => {
   return (
     <div>
       <Container textAlign='center'>
-        <Image src={foodInfo.image} size='big' circular style={{width: '400px', height: '400px'}} centered/>
+        <Image className="food-img" src={foodInfo.image} size='big' circular centered/>
         <Header>
           {foodInfo.name}
         </Header>
         <Divider section/>
-        <Container style={{width: '500px'}}>
+        <Container className="food-body">
           <Header textAlign='center'>
             Directions
           </Header>
@@ -50,7 +51,7 @@ const FoodInfoBlock = (props) => {
                 <Step.Content>
                   <Step.Description>
                     {ingredient.body}
-                    {ingredient.alternatives.length > 0 ? <AlternativesBlock alternatives={ingredient.alternatives}/>: ''}
+                    {ingredient.alternatives.length > 0 && <AlternativesBlock alternatives={ingredient.alternatives}/>}
                   </Step.Description>
                 </Step.Content>
               </Step>
@@ -71,8 +72,8 @@ export default class FoodInfo extends Component {
   render() {
     const {foodInfo} = this.props;
     return (
-      <div className="foodinfo">
-        {foodInfo ? <FoodInfoBlock foodInfo={foodInfo}/> : ''}
+      <div className="FoodInfo">
+        {foodInfo && <FoodInfoBlock foodInfo={foodInfo}/>}
       </div>
     )
   }

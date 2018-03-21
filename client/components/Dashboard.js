@@ -6,7 +6,7 @@ import {
 import SecondNavigator from './post/SecondNavigator';
 import PostList from './post/PostList';
 import Zjax from '../utils/zjax';
-import './Dashboard.css';
+import './Dashboard.sass';
 import Spinner from 'react-spinkit';
 
 function Loading(props) {

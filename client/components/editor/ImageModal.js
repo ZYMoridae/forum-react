@@ -11,7 +11,7 @@ import {
   Container, 
   Icon
 } from 'semantic-ui-react';
-import './ImageModal.css';
+import './ImageModal.sass';
 
 
 const ImageList = (props) => {
@@ -74,7 +74,7 @@ export default class ImageModal extends Component {
             </Modal.Description>
           </Modal.Content>
           <Modal.Actions>
-            <input ref="fileField" type="file" id="file" style={{display: 'none'}} onChange={fileAdded}/>
+            <input ref="fileField" type="file" id="file" onChange={fileAdded}/>
             <Button color='green' inverted onClick={addImageClick}>
               <Icon name='plus' /> Add
             </Button>

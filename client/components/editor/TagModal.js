@@ -7,7 +7,7 @@ import {
   List, 
   Form
 } from 'semantic-ui-react';
-import './TagModal.css';
+import './TagModal.sass';
 
 
 function TagItem(props) {

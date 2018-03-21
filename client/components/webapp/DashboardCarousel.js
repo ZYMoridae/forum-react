@@ -7,6 +7,7 @@ import {
   Progress
 } from 'semantic-ui-react';
 import Spinner from 'react-spinkit';
+import './DashboardCarousel.sass';
 
 function CarouselItems(props) {
   const {todayWorkouts, isFetchingTodayWorouts, isShowSubCategory, workoutCategoryClick, subCategory} = props;
@@ -28,6 +29,10 @@ function CarouselItems(props) {
       category.color = '#3ac4a9';
     }else if (category.code_name === 'recovery') {
       category.color = '#4f94fb';
+    }else if (category.code_name === 'challenge'){
+      category.color = '#fd906a';
+    }else {
+      category.color = '#fd5699';
     }
   });
   let renderedComponent = <Spinner name="pacman" color="black"/>
@@ -37,13 +42,13 @@ function CarouselItems(props) {
     renderedComponent = <div>
                           <Slider {...settings}>
                             {todayWorkouts.categories.map((category, index) => 
-                              <div key={category.id} style={{backgroundColor: category.color, height: '450px', marginLeft: '20px', borderRadius: '10px'}}>
+                              <div key={category.id} className="category-block" style={{backgroundColor: category.color}}>
                                 <a onClick={()=>{workoutCategoryClick(category.id)}}>
-                                  <div style={{verticalAlign: 'middle', lineHeight: '450px', marginLeft: '50px', marginTop: '50px', height: '450px', width: '350px'}}>
-                                    <Header as='h1' style={{color: 'white'}}>
+                                  <div className='category-block-container'>
+                                    <Header as='h1' className='category-header'>
                                       {category.name} <Progress size="tiny" percent={parseInt(1/todayWorkouts.progress[index].total*100)} indicating />
                                     </Header>
-                                    <div style={{fontSize: '14px', color: 'white'}}>
+                                    <div className='category-body'>
                                       {renderHTML(category.html_body)}
                                     </div>
                                   </div>
@@ -51,14 +56,14 @@ function CarouselItems(props) {
                               </div>
                             )}
                           </Slider>
-                          <div style={{marginTop: '50px'}}>
+                          <div className="subcategory-list-container">
                             {isShowSubCategory && 
                               <Slider {...settings}>
                                 {subCategory.map((category, index) => 
-                                  <div key={category.id} style={{backgroundColor: 'black', height: '120px', marginLeft: '20px', borderRadius: '10px'}}>
+                                  <div className="subcategory-block" key={category.id}>
                                     <a href={`/#/webapp/workout/overview/${category.id}`}>
-                                      <div style={{verticalAlign: 'middle', lineHeight: '120px', marginLeft: '50px', marginTop: '50px', height: '120px', width: '350px'}}>
-                                        <Header as='h3' style={{color: 'white'}}>
+                                      <div className="subcategory-block-container">
+                                        <Header as='h3' className="subcategory-header">
                                           {category.name} - {category.id}
                                         </Header>
                                       </div>
@@ -79,7 +84,7 @@ export default class DashboardCarousel extends Component {
   render() {
     const { todayWorkouts, isFetchingTodayWorouts, isShowSubCategory, workoutCategoryClick, subCategory} = this.props;
     return (
-      <div className="dashboardcarousel">
+      <div className="DashboardCarousel">
         {todayWorkouts && <CarouselItems subCategory={subCategory} isShowSubCategory={isShowSubCategory} workoutCategoryClick={workoutCategoryClick} todayWorkouts={todayWorkouts} isFetchingTodayWorouts={isFetchingTodayWorouts}/>}
       </div>
     )

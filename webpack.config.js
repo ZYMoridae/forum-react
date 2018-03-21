@@ -8,7 +8,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   filename: 'index.html',
   inject: 'body'
 })
-
+// const webpackDashboard = require('webpack-dashboard/plugin');
 
 module.exports = {
   entry: './client/index.js',
@@ -28,6 +28,15 @@ module.exports = {
   },
   module: {
     rules: [{
+        test: /\.sass$/,
+        use: [{
+          loader: "style-loader" // creates style nodes from JS strings
+        }, {
+          loader: "css-loader" // translates CSS into CommonJS
+        }, {
+          loader: "sass-loader" // compiles Sass to CSS
+        }]
+      },{
         test: /\.jsx?$/, // Transform all .js/.jsx files required somewhere with Babel
         exclude: /node_modules/,
         use: {
@@ -95,16 +104,19 @@ module.exports = {
       },
     }],
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/, query: {
-        presets:[ 'es2017', 'react', 'stage-3' ]
-      } },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/, query: {
-        presets:[ 'es2017', 'react', 'stage-3' ]
-      } },
-      { test: /\.css$/, loader: ['css-loader', 'style-loader'], include: /node_modules/ },
-      { test: /\.svg$/, loader: 'svg-inline-loader', exclude: /node_modules/},
-      {loader: 'style-loader!css-loader', test: /\.css$/},
+      // { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/, query: {
+      //   presets:[ 'es2017', 'react', 'stage-3' ]
+      // } },
+      // { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/, query: {
+      //   presets:[ 'es2017', 'react', 'stage-3' ]
+      // } },
+      // { test: /\.css$/, loader: ['css-loader', 'style-loader'], include: /node_modules/ },
+      // { test: /\.svg$/, loader: 'svg-inline-loader', exclude: /node_modules/},
+      // {loader: 'style-loader!css-loader', test: /\.css$/},
     ]
   },
-  plugins: [HtmlWebpackPluginConfig]
+  plugins: [
+    // new webpackDashboard(),
+    HtmlWebpackPluginConfig
+  ]
 }

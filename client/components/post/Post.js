@@ -5,7 +5,7 @@ import {
 } from '../../actions';
 import Comment from '../../components/comment/Comment';
 import Spinner from 'react-spinkit';
-import './Post.css';
+import './Post.sass';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faShareAlt from '@fortawesome/fontawesome-free-solid/faShareAlt';
 import faShare from '@fortawesome/fontawesome-free-solid/faShare';

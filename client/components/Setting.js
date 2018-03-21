@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { fetchUserCardInfo, toggleVisibility} from '../actions';
 import { Segment, Image, Item, Button, Message, Card, Icon, Sidebar, Menu, Header} from 'semantic-ui-react';
-import './Setting.css';
+import './Setting.sass';
 import AuthorsSongRaw from '../json/authors.song';
 import _ from 'lodash';
 
